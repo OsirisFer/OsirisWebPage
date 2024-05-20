@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <link rel="stylesheet" type="text/css" href="CheatSheetCss.css">
+    <script src="PruebaPrueba.js"></script>
+</head>
+<body>
+    <h1>Componentes de React</h1>
+
+<h2>¿Qué es un Componente?</h2>
+<p>Un componente en React es una pieza reutilizable de la interfaz de usuario que puede tener su propio estado y lógica. Los componentes se pueden anidar, gestionar y manejar independientemente.</p>
+<p>Componentes Funcionales son funciones de JavaScript que aceptan un único argumento (props) y devuelven elementos de React.</p>
+<pre>
+<code>
+function ComponenteFuncional(props) {
+  return &lt;h1&gt;Hola, {props.nombre}!&lt;/h1&gt;;
+}
+</code>
+</pre>
+<p>Componentes de Clase Son clases de ES6 que extienden de React.Component y tienen un método render() que devuelve elementos de React.</p>
+<pre>
+<code>
+class ComponenteClase extends React.Component {
+  render() {
+    return &lt;h1&gt;Hola, {this.props.nombre}!&lt;/h1&gt;;
+  }
+}
+</code>
+</pre>
+<p>Propiedades (Props)Las propiedades son argumentos que se pasan a los componentes y se utilizan para pasar datos e invocar funciones de un componente a otro.</p>
+<pre>
+<code>
+function ComponenteConProps(props) {
+  return &lt;p&gt;Mi nombre es {props.nombre} y tengo {props.edad} años.&lt;/p&gt;;
+}
+
+// Uso del componente
+&lt;ComponenteConProps nombre="Juan" edad={30} /&gt;
+</code>
+</pre>
+
+<p>Estado (State)El estado es un objeto que determina cómo se renderiza y se comporta un componente. Es gestionado dentro del componente y puede cambiar con el tiempo.</p>
+<pre>
+<code>
+class ComponenteConEstado extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { contador: 0 };
+  }
+
+  incrementar = () => {
+    this.setState({ contador: this.state.contador + 1 });
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;p&gt;Contador: {this.state.contador}&lt;/p&gt;
+        &lt;button onClick={this.incrementar}&gt;Incrementar&lt;/button&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+</code>
+</pre>
+
+<h2></h2>
+<p>Ciclo de Vida Los componentes de clase tienen métodos del ciclo de vida que se invocan en diferentes etapas del ciclo de vida del componente, como montaje, actualización y desmontaje.</p>
+<pre>
+<code>
+class ComponenteCicloDeVida extends React.Component {
+  componentDidMount() {
+    // Código que se ejecuta después de que el componente se ha montado
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Código que se ejecuta después de que el componente se ha actualizado
+  }
+
+  componentWillUnmount() {
+    // Código que se ejecuta justo antes de que el componente se desmonte
+  }
+
+  render() {
+    return &lt;div&gt;Componente con ciclo de vida&lt;/div&gt;;
+  }
+}
+</code>
+</pre>
+</body>
+</html>
