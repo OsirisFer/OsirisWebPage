@@ -1347,6 +1347,577 @@ test('coincide con el snapshot', () => {
         <li><strong>Pruebas Unitarias:</strong> Verifican el comportamiento de componentes individuales.</li>
         <li><strong>Pruebas Snapshot:</strong> Verifican que la salida renderizada de un componente no cambie inesperadamente.</li>
     </ul>
+    <h1>Frameworks de SSR en React: Next.js</h1>
+
+    <h2>Next.js</h2>
+    <p>Next.js es un framework de React que facilita la creación de aplicaciones React con capacidades de SSR, generación estática (SSG) y otras características avanzadas.</p>
+
+    <h3>Instalación</h3>
+    <p>Para empezar con Next.js, necesitas instalar <code>next</code>, <code>react</code>, y <code>react-dom</code>:</p>
+    <pre><code>
+npx create-next-app@latest my-nextjs-app
+cd my-nextjs-app
+npm run dev
+    </code></pre>
+
+    <h3>Estructura de Archivos</h3>
+    <p>Next.js sigue una estructura de archivos específica donde cada archivo en la carpeta <code>pages</code> se convierte en una ruta en la aplicación.</p>
+    <pre><code>
+my-nextjs-app/
+├── pages/
+│   ├── index.js
+│   ├── about.js
+│   └── users/
+│       └── [id].js
+    </code></pre>
+
+    <h3>Página Básica en Next.js</h3>
+    <h4><code>pages/index.js</code></h4>
+    <pre><code>
+import React from 'react';
+
+function Home() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Bienvenido a Next.js&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Home;
+    </code></pre>
+
+    <h2>Renderizado del Lado del Servidor (SSR) en Next.js</h2>
+    <p>Para habilitar SSR en una página, puedes usar el método <code>getServerSideProps</code>. Este método se ejecuta en el servidor en cada solicitud y puede pasar datos a tu componente.</p>
+    <h3>Ejemplo de SSR con <code>getServerSideProps</code></h3>
+    <h4><code>pages/users/[id].js</code></h4>
+    <pre><code>
+import React from 'react';
+
+function User({ user }) {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Usuario: {user.name}&lt;/h1&gt;
+      &lt;p&gt;Email: {user.email}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+  const user = await res.json();
+
+  return {
+    props: {
+      user,
+    },
+  };
+}
+
+export default User;
+    </code></pre>
+
+    <h2>Generación Estática (SSG) en Next.js</h2>
+    <p>Next.js también soporta la Generación Estática (SSG) con <code>getStaticProps</code> y <code>getStaticPaths</code>, que genera páginas estáticas en el momento de la construcción.</p>
+    <h3>Ejemplo de SSG con <code>getStaticProps</code> y <code>getStaticPaths</code></h3>
+    <h4><code>pages/users/[id].js</code></h4>
+    <pre><code>
+import React from 'react';
+
+function User({ user }) {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Usuario: {user.name}&lt;/h1&gt;
+      &lt;p&gt;Email: {user.email}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export async function getStaticPaths() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/users');
+  const users = await res.json();
+  
+  const paths = users.map((user) => ({
+    params: { id: user.id.toString() },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`);
+  const user = await res.json();
+
+  return {
+    props: {
+      user,
+    },
+  };
+}
+
+export default User;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Next.js:</strong> Framework de React para SSR y SSG.</li>
+        <li><strong>SSR:</strong> Usa <code>getServerSideProps</code> para renderizar contenido en el servidor.</li>
+        <li><strong>SSG:</strong> Usa <code>getStaticProps</code> y <code>getStaticPaths</code> para generar contenido estático.</li>
+    </ul>
+    <h1>Formularios en React</h1>
+
+    <h2>Formulario Controlado</h2>
+    <p>En un formulario controlado, React gestiona el estado de los inputs del formulario.</p>
+    <h3>Componente con Formulario Controlado</h3>
+    <pre><code>
+import React, { useState } from 'react';
+
+function FormularioControlado() {
+  // Definir el estado para los campos del formulario
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+
+  // Manejar el cambio en el campo de nombre
+  const handleNombreChange = (event) => {
+    setNombre(event.target.value);
+  };
+
+  // Manejar el cambio en el campo de email
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  // Manejar el envío del formulario
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`Nombre: ${nombre}, Email: ${email}`);
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;div&gt;
+        &lt;label&gt;
+          Nombre:
+          &lt;input type="text" value={nombre} onChange={handleNombreChange} /&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label&gt;
+          Email:
+          &lt;input type="email" value={email} onChange={handleEmailChange} /&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+
+export default FormularioControlado;
+    </code></pre>
+
+    <h2>Formulario con Múltiples Campos</h2>
+    <p>Para manejar un formulario con múltiples campos, puedes usar un solo objeto de estado.</p>
+    <h3>Componente con Formulario y Estado Combinado</h3>
+    <pre><code>
+import React, { useState } from 'react';
+
+function FormularioMultiple() {
+  // Definir el estado para el formulario
+  const [form, setForm] = useState({
+    nombre: '',
+    email: '',
+    mensaje: ''
+  });
+
+  // Manejar el cambio en los campos del formulario
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value
+    }));
+  };
+
+  // Manejar el envío del formulario
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert(`Nombre: ${form.nombre}, Email: ${form.email}, Mensaje: ${form.mensaje}`);
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;div&gt;
+        &lt;label&gt;
+          Nombre:
+          &lt;input type="text" name="nombre" value={form.nombre} onChange={handleChange} /&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label&gt;
+          Email:
+          &lt;input type="email" name="email" value={form.email} onChange={handleChange} /&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label&gt;
+          Mensaje:
+          &lt;textarea name="mensaje" value={form.mensaje} onChange={handleChange}&gt;&lt;/textarea&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+      &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+
+export default FormularioMultiple;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Formularios Controlados:</strong> React gestiona el estado de los inputs del formulario.</li>
+        <li><strong>Manejo de Cambios:</strong> Las funciones de cambio (<code>onChange</code>) actualizan el estado.</li>
+        <li><strong>Manejo del Envío:</strong> La función de envío (<code>onSubmit</code>) maneja el comportamiento del formulario.</li>
+        <li><strong>Estado Combinado:</strong> Útil para formularios con múltiples campos, usando un solo objeto de estado.</li>
+    </ul>
+    <h1>Manejo de Formularios en React</h1>
+
+    <h2>React Hook Form</h2>
+    <p>React Hook Form es una biblioteca para manejar formularios en React de manera sencilla y eficiente utilizando hooks.</p>
+    <h3>Instalación</h3>
+    <pre><code>
+npm install react-hook-form
+    </code></pre>
+    <h3>Ejemplo de React Hook Form</h3>
+    <pre><code>
+import React from 'react';
+import { useForm } from 'react-hook-form';
+
+function FormularioConReactHookForm() {
+  // Usar useForm hook para manejar el formulario
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  // Función que se llama al enviar el formulario
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  return (
+    &lt;form onSubmit={handleSubmit(onSubmit)}&gt;
+      &lt;div&gt;
+        &lt;label&gt;Nombre:&lt;/label&gt;
+        {/* Registrar el input con register y añadir validación */}
+        &lt;input {...register('nombre', { required: true })} /&gt;
+        {/* Mostrar mensaje de error si el campo 'nombre' está vacío */}
+        {errors.nombre && &lt;span&gt;Este campo es obligatorio&lt;/span&gt;}
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label&gt;Email:&lt;/label&gt;
+        {/* Registrar el input con register y añadir validación */}
+        &lt;input type="email" {...register('email', { required: true })} /&gt;
+        {/* Mostrar mensaje de error si el campo 'email' está vacío */}
+        {errors.email && &lt;span&gt;Este campo es obligatorio&lt;/span&gt;}
+      &lt;/div&gt;
+      &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+
+export default FormularioConReactHookForm;
+    </code></pre>
+
+    <h2>Formik</h2>
+    <p>Formik es una popular biblioteca de formularios para React que simplifica la gestión del estado y la validación de formularios.</p>
+    <h3>Instalación</h3>
+    <pre><code>
+npm install formik
+    </code></pre>
+    <h3>Ejemplo de Formik</h3>
+    <pre><code>
+import React from 'react';
+import { useFormik } from 'formik';
+
+function FormularioConFormik() {
+  // Usar useFormik hook para manejar el formulario
+  const formik = useFormik({
+    initialValues: {
+      nombre: '',
+      email: '',
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  return (
+    &lt;form onSubmit={formik.handleSubmit}&gt;
+      &lt;div&gt;
+        &lt;label&gt;Nombre:&lt;/label&gt;
+        {/* Asignar el valor del input y manejar cambios con formik */}
+        &lt;input
+          type="text"
+          name="nombre"
+          onChange={formik.handleChange}
+          value={formik.values.nombre}
+        /&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;label&gt;Email:&lt;/label&gt;
+        {/* Asignar el valor del input y manejar cambios con formik */}
+        &lt;input
+          type="email"
+          name="email"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+        /&gt;
+      &lt;/div&gt;
+      &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+
+export default FormularioConFormik;
+    </code></pre>
+
+    <h2>Final Form</h2>
+    <p>Final Form es otra biblioteca de formularios que se centra en la simplicidad y la flexibilidad.</p>
+    <h3>Instalación</h3>
+    <pre><code>
+npm install final-form react-final-form
+    </code></pre>
+    <h3>Ejemplo de Final Form</h3>
+    <pre><code>
+import React from 'react';
+import { Form, Field } from 'react-final-form';
+
+function FormularioConFinalForm() {
+  // Función que se llama al enviar el formulario
+  const onSubmit = (values) => {
+    console.log(values);
+  };
+
+  return (
+    &lt;Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit }) => (
+        &lt;form onSubmit={handleSubmit}&gt;
+          &lt;div&gt;
+            &lt;label&gt;Nombre:&lt;/label&gt;
+            {/* Definir un campo usando Field y asignar el nombre del campo */}
+            &lt;Field name="nombre" component="input" type="text" /&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            &lt;label&gt;Email:&lt;/label&gt;
+            {/* Definir un campo usando Field y asignar el nombre del campo */}
+            &lt;Field name="email" component="input" type="email" /&gt;
+          &lt;/div&gt;
+          &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+        &lt;/form&gt;
+      )}
+    /&gt;
+  );
+}
+
+export default FormularioConFinalForm;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>React Hook Form:</strong> Usa hooks para manejar formularios de manera eficiente y sencilla.</li>
+        <li><strong>Formik:</strong> Simplifica la gestión del estado y la validación de formularios.</li>
+        <li><strong>Final Form:</strong> Se centra en la simplicidad y la flexibilidad para manejar formularios.</li>
+    </ul>
+
+    <h1>Conceptos Avanzados de React</h1>
+
+    <h2>Suspense</h2>
+    <p><code>Suspense</code> es un componente que permite mostrar un contenido de carga mientras se espera que se resuelvan componentes asincrónicos como datos remotos o cargas de código dividido.</p>
+    <h3>Ejemplo de Suspense</h3>
+    <pre><code>
+import React, { Suspense, lazy } from 'react';
+
+// Cargar un componente de forma diferida
+const ComponenteDiferido = lazy(() => import('./ComponenteDiferido'));
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Ejemplo de Suspense&lt;/h1&gt;
+      {/* Suspense muestra el contenido de carga mientras se carga el componente */}
+      &lt;Suspense fallback={&lt;div&gt;Cargando...&lt;/div&gt;}&gt;
+        &lt;ComponenteDiferido /&gt;
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Portals</h2>
+    <p><code>Portals</code> permiten renderizar componentes en un nodo del DOM que existe fuera de la jerarquía del componente padre.</p>
+    <h3>Ejemplo de Portals</h3>
+    <pre><code>
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+function Modal({ children }) {
+  // Renderizar el componente en el nodo del DOM con id 'modal-root'
+  return ReactDOM.createPortal(
+    &lt;div className="modal"&gt;{children}&lt;/div&gt;,
+    document.getElementById('modal-root')
+  );
+}
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Ejemplo de Portals&lt;/h1&gt;
+      &lt;Modal&gt;
+        &lt;p&gt;Este es un modal&lt;/p&gt;
+      &lt;/Modal&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Error Boundaries</h2>
+    <p>Los <code>Error Boundaries</code> son componentes que capturan errores de JavaScript en cualquier parte de su árbol de componentes hijos, registrándolos y mostrando una interfaz de repuesto en su lugar.</p>
+    <h3>Ejemplo de Error Boundaries</h3>
+    <pre><code>
+import React, { Component } from 'react';
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Actualizar el estado para mostrar una UI de repuesto
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Puedes enviar el error a un servicio de reporte de errores
+    console.log(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return &lt;h1&gt;Algo salió mal.&lt;/h1&gt;;
+    }
+
+    return this.props.children;
+  }
+}
+
+function ComponenteErroneo() {
+  throw new Error('¡Error intencional!');
+}
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Ejemplo de Error Boundaries&lt;/h1&gt;
+      &lt;ErrorBoundary&gt;
+        &lt;ComponenteErroneo /&gt;
+      &lt;/ErrorBoundary&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Fiber Architecture</h2>
+    <p>React Fiber es una reescritura completa del núcleo de React para mejorar la capacidad de respuesta y la percepción de rendimiento. Permite dividir el trabajo de renderizado en unidades más pequeñas y pausar/retomar el trabajo según sea necesario.</p>
+    <h3>Explicación de Fiber</h3>
+    <ul>
+        <li><strong>Concurrency:</strong> Permite interrumpir el trabajo para manejar tareas prioritarias como la respuesta a la entrada del usuario.</li>
+        <li><strong>Prioridades de actualización:</strong> Diferentes tipos de actualizaciones pueden tener diferentes niveles de prioridad.</li>
+        <li><strong>Recuperación de errores:</strong> Mejora la capacidad de recuperación de errores y de manejar errores en la UI.</li>
+    </ul>
+    <h3>Ejemplo de Concepto (no código)</h3>
+    <ul>
+        <li><strong>Antiguo Reconciler (Stack Reconciler):</strong> Bloqueante y síncrono, lo que significa que grandes árboles de componentes podían hacer que la aplicación pareciera bloqueada.</li>
+        <li><strong>Nuevo Reconciler (Fiber):</strong> Asíncrono y basado en prioridades, permitiendo que React trabaje de manera más eficiente y responsiva.</li>
+    </ul>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Suspense:</strong> Muestra contenido de carga mientras se resuelven componentes asincrónicos.</li>
+        <li><strong>Portals:</strong> Permite renderizar componentes fuera de la jerarquía del DOM padre.</li>
+        <li><strong>Error Boundaries:</strong> Captura errores en componentes hijos y muestra una UI de repuesto.</li>
+        <li><strong>Fiber Architecture:</strong> Mejora el rendimiento y la capacidad de respuesta de React.</li>
+    </ul>
+    <h1>Portals en React</h1>
+
+    <h2>¿Por qué usar Portals?</h2>
+    <ul>
+        <li><strong>Separación de Contextos:</strong> Mantén el código de un componente dentro de su contexto lógico, pero renderízalo en otra parte del DOM.</li>
+        <li><strong>Estilos y Posicionamiento:</strong> Posiciona un elemento respecto al viewport en lugar de otro elemento en el DOM.</li>
+    </ul>
+
+    <h2>Creación de un Portal</h2>
+    <h3>Paso 1: Crear un nodo del DOM en tu HTML</h3>
+    <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;React App&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="root"&gt;&lt;/div&gt;
+  &lt;div id="modal-root"&gt;&lt;/div&gt; &lt;!-- Nodo del DOM para el Portal --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+    </code></pre>
+
+    <h3>Paso 2: Crear el Componente del Portal</h3>
+    <pre><code>
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// Componente Modal que se renderiza usando Portals
+function Modal({ children }) {
+  return ReactDOM.createPortal(
+    &lt;div className="modal"&gt;
+      {children}
+    &lt;/div&gt;,
+    document.getElementById('modal-root') // Renderiza en el nodo del DOM 'modal-root'
+  );
+}
+
+// Ejemplo de uso del Modal
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Ejemplo de Portals&lt;/h1&gt;
+      &lt;Modal&gt;
+        &lt;p&gt;Este es un modal&lt;/p&gt;
+      &lt;/Modal&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Ventajas de los Portals</h2>
+    <ul>
+        <li><strong>Aislamiento de Estilos:</strong> Ayuda a evitar problemas de CSS al aislar el componente modal de otros estilos no deseados.</li>
+        <li><strong>Mejor Control del Z-Index:</strong> Permite controlar mejor la superposición de elementos.</li>
+        <li><strong>Mejor Soporte para Librerías Externas:</strong> Funciona mejor con librerías de terceros que gestionan eventos globales del DOM.</li>
+    </ul>
+
+    <h2>Resumen</h2>
+    <p>Los <code>Portals</code> en React permiten renderizar componentes en un nodo del DOM que existe fuera de la jerarquía del componente padre, lo que es útil para casos como modales y tooltips. Utilizan <code>ReactDOM.createPortal</code> para lograr esto, proporcionando flexibilidad y control sobre el renderizado de componentes en diferentes partes del DOM.</p>
+
 
 </body>
 </html>
