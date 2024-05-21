@@ -8,53 +8,211 @@
     <script src="PruebaPrueba.js"></script>
 </head>
 <body>
-    <h1>Componentes de React</h1>
-
-<h2>¿Qué es un Componente?</h2>
-<p>Un componente en React es una pieza reutilizable de la interfaz de usuario que puede tener su propio estado y lógica. Los componentes se pueden anidar, gestionar y manejar independientemente.</p>
-<p>Componentes Funcionales son funciones de JavaScript que aceptan un único argumento (props) y devuelven elementos de React.</p>
-<pre>
-<code>
-function ComponenteFuncional(props) {
-  return &lt;h1&gt;Hola, {props.nombre}!&lt;/h1&gt;;
-}
-</code>
-</pre>
-<p>Componentes de Clase Son clases de ES6 que extienden de React.Component y tienen un método render() que devuelve elementos de React.</p>
-<pre>
-<code>
-class ComponenteClase extends React.Component {
-  render() {
-    return &lt;h1&gt;Hola, {this.props.nombre}!&lt;/h1&gt;;
+  <h1>React</h1>
+  <h2>Componentes</h2>
+  <p>Las páginas en react están hechas de componentes, piezas de la interfaz de usuario que tienen su propia logica y apariencia. Un componente puede ser chico como un botón o hasta una página entera, básicamente un componente es una función de JavaScript que retorna una un markup</p>
+  <pre><code>
+    function MyButton() {
+      return (
+      &lt;button className="" &gt;I'm a button&lt;/button&gt;
+      );
+    }
+    export default function MyApp() {
+      return (
+        &lt;div&gt;
+          &lt;h1&gt;Welcome to my app&lt;/h1&gt;
+          &lt;MyButton /&gt;
+        &lt;/div&gt;
+      );
+    }
+  </code></pre>
+  <p>Esto es <b>JSX</b> es decir JavaScript XML, permite escribir JS en HTML y convertirlo en elementos de react. Este es más estricto que HTML si tienes tags como br hay que cerrarlas con < br />, tampoco el componente puede retornar varios tags JSX, tienen que estar envueltas en un padre compartido como un div o unas < > vacías. </p>
+  <pre><code>
+      function AboutPage() {
+        return (
+          <>
+            &#x3C;h1&#x3E;About&#x3C;/h1&#x3E;
+            &#x3C;p&#x3E;Hello there.&lt;br /&gt;How do you do?&lt;/p&gt;
+          </>
+        );
+      }
+  </code></pre>  
+  <p>https://transform.tools/html-to-jsx pagina para convertir html en jsx.</p>
+  <p>En react se especifica la clase de CSS con el atribut className en el tag de jsx como se muestra arriba en el ejemplo del boton</p>
+  <p>Las llaves <b>{ }</b> te permiten escapara al lenguaje de JS, para poder poner una variable o algo.</p>
+  <pre><code>
+    return (
+        &lt;h1&gt;Welcome to my app
+        {user.atributo +'algo'} 
+      &lt;/h1&gt;
+    );
+  </code></pre>
+<p><b>Render Condicional</b> es igual que escribir JS común, puedes usar if o el operador condicional ? que a diferencia del if funciona dentro del JSX</p>
+<pre><code>
+  if (isLoggedIn) {
+    content = &lt;AdminPanel /&gt;;
+  } else {
+    content = &lt;LoginForm /&gt;;
   }
-}
-</code>
-</pre>
-<p>Propiedades (Props)Las propiedades son argumentos que se pasan a los componentes y se utilizan para pasar datos e invocar funciones de un componente a otro.</p>
-<pre>
+  return (
+    &lt;div&gt; +
+      content +
+    &lt;/div&gt;
+  );
+  o sino:
+  &lt;div&gt; +
+    (isLoggedIn ? 
+      &lt;AdminPanel /&gt;
+    ) : (
+      &lt;LoginForm /&gt;
+    )) +
+  &lt;/div&gt;;
+  </code></pre>
+
+  <h2>Props vs State en React</h2>
+  <p>En React, <code>props</code> y <code>state</code> son dos conceptos fundamentales que permiten manejar los datos y la renderización de los componentes. Ambos tienen roles distintos y se utilizan en diferentes contextos.</p>
+  <h3>Props</h3>
+  <p>Las <code>props</code> (abreviatura de "properties") son datos que se pasan de un componente padre a un componente hijo. Se utilizan para configurar y personalizar el componente hijo. Las <code>props</code> son inmutables, lo que significa que un componente no puede cambiar sus propias <code>props</code>. Esto garantiza un flujo de datos unidireccional y predecible en la aplicación.</p>
+  <p>Un ejemplo simple de uso de <code>props</code>:</p>
+  <code>
+      const ComponenteHijo = ({ mensaje }) => {<br>
+          return &lt;div&gt;{mensaje}&lt;/div&gt;;<br>
+      };<br><br>
+      const ComponentePadre = () => {<br>
+          return &lt;ComponenteHijo mensaje="Hola, mundo!" /&gt;;<br>
+      };
+  </code>
+  <h3>State</h3>
+  <p>El <code>state</code> es un objeto que pertenece a un componente y que se utiliza para almacenar datos que pueden cambiar a lo largo del ciclo de vida del componente. A diferencia de las <code>props</code>, el <code>state</code> es mutable y puede ser modificado dentro del propio componente, lo que permite actualizar la UI en respuesta a eventos del usuario o cambios en los datos.</p>
+  <p>Un ejemplo simple de uso de <code>state</code>:</p>
+  <code>
+      import React, { useState } from 'react';<br><br>
+      const ComponenteConEstado = () => {<br>
+          const [contador, setContador] = useState(0);<br><br>
+          const incrementar = () => {<br>
+              setContador(contador + 1);<br>
+          };<br><br>
+          return (<br>
+              &lt;div&gt;<br>
+                  &lt;p&gt;Contador: {contador}&lt;/p&gt;<br>
+                  &lt;button onClick={incrementar}&gt;Incrementar&lt;/button&gt;<br>
+              &lt;/div&gt;<br>
+          );<br>
+      };
+  </code>
+  <h3>Diferencias clave</h3>
+  <ul>
+      <li><b>Inmutabilidad:</b> Las <code>props</code> son inmutables, mientras que el <code>state</code> es mutable.</li>
+      <li><b>Propiedad:</b> Las <code>props</code> se pasan de un componente padre a un componente hijo, mientras que el <code>state</code> es gestionado dentro del propio componente.</li>
+      <li><b>Uso:</b> Las <code>props</code> se utilizan para pasar datos y configuraciones, mientras que el <code>state</code> se utiliza para datos que cambian a lo largo del tiempo y afectan la renderización del componente.</li>
+  </ul>
+  <h2>Composición vs Herencia en React</h2>
+  <p>En React, la composición y la herencia son dos formas de reutilizar el código y estructurar los componentes. React prefiere la composición sobre la herencia debido a la flexibilidad y simplicidad que ofrece.</p>
+  <h3>Definición de los componentes</h3>
+<p>Primero, definimos los componentes individuales:</p>
 <code>
-function ComponenteConProps(props) {
-  return &lt;p&gt;Mi nombre es {props.nombre} y tengo {props.edad} años.&lt;/p&gt;;
+    const Tarjeta = ({ children }) => {<br>
+        return (&lt;div className="tarjeta"&gt;{children}&lt;/div&gt;);<br>
+    };<br><br>
+    const Encabezado = ({ titulo }) => {<br>
+        return (&lt;h1&gt;{titulo}&lt;/h1&gt;);<br>
+    };<br><br>
+    const Contenido = ({ texto }) => {<br>
+        return (&lt;p&gt;{texto}&lt;/p&gt;);<br>
+    };
+</code>
+<p>Aquí, <code>Tarjeta</code> es un contenedor genérico que puede envolver cualquier contenido que se le pase como <code>children</code>. <code>Encabezado</code> y <code>Contenido</code> son componentes simples que reciben datos a través de <code>props</code> y los renderizan.</p>
+
+<h3>Composición de los componentes</h3>
+<p>Ahora, podemos componer estos componentes en un componente más complejo llamado <code>TarjetaCompleta</code>:</p>
+<code>
+    const TarjetaCompleta = () => {<br>
+        return (<br>
+            &lt;Tarjeta&gt;<br>
+                &lt;Encabezado titulo="Título de la Tarjeta" /&gt;<br>
+                &lt;Contenido texto="Este es el contenido de la tarjeta." /&gt;<br>
+            &lt;/Tarjeta&gt;<br>
+        );<br>
+    };
+</code>
+<p>En este ejemplo, <code>TarjetaCompleta</code> utiliza los componentes <code>Tarjeta</code>, <code>Encabezado</code> y <code>Contenido</code> para construir una tarjeta completa. Cada componente se encarga de una parte específica de la UI, y al combinarlos, obtenemos una estructura más compleja.</p>
+
+<h3>Ventajas de la Composición</h3>
+<ul>
+    <li><b>Reutilización:</b> Los componentes individuales como <code>Encabezado</code> y <code>Contenido</code> pueden reutilizarse en diferentes partes de la aplicación.</li>
+    <li><b>Mantenimiento:</b> Los componentes son más fáciles de mantener y actualizar de manera independiente.</li>
+    <li><b>Flexibilidad:</b> Podemos combinar los componentes de diversas maneras para crear nuevas estructuras sin duplicar código.</li>
+</ul>
+
+<p>En resumen, la composición en React es una técnica poderosa que permite construir componentes complejos de manera modular y reutilizable, facilitando el mantenimiento y la escalabilidad de la aplicación.</p>
+
+  <h3>Herencia</h3>
+  <p>La herencia, en términos de programación orientada a objetos, permite que una clase herede características (métodos y propiedades) de otra clase. Sin embargo, en React, este enfoque no se utiliza comúnmente porque puede llevar a estructuras de componentes rígidas y difíciles de mantener.</p>
+  <p>En lugar de herencia, React promueve la reutilización de código a través de la composición. Sin embargo, es posible usar herencia en JavaScript para componentes de React, pero no es la práctica recomendada.</p>
+  <p>Ejemplo de herencia en JavaScript:</p>
+  <code>
+      class ComponenteBase extends React.Component {<br>
+          render() {<br>
+              return &lt;div&gt;Componente base&lt;/div&gt;;<br>
+          }<br>
+      }<br><br>
+      class ComponenteDerivado extends ComponenteBase {<br>
+          render() {<br>
+              return (&lt;div&gt;<br>
+                  {super.render()}<br>
+                  &lt;div&gt;Componente derivado&lt;/div&gt;<br>
+              &lt;/div&gt;);<br>
+          }<br>
+      }
+  </code>
+  <h3>Diferencias clave</h3>
+  <ul>
+      <li><b>Flexibilidad:</b> La composición ofrece más flexibilidad, permitiendo combinar componentes de diferentes maneras, mientras que la herencia puede resultar en una jerarquía de componentes rígida.</li>
+      <li><b>Reutilización:</b> La composición facilita la reutilización de componentes pequeños y específicos, mientras que la herencia puede llevar a componentes monolíticos y menos reutilizables.</li>
+      <li><b>Mantenimiento:</b> La composición tiende a ser más fácil de mantener y entender, ya que los componentes están desacoplados y pueden ser modificados de manera independiente.</li>
+  </ul>
+  <p>En resumen, React favorece la composición sobre la herencia debido a su simplicidad y capacidad para crear componentes reutilizables y flexibles.</p>
+  <h1>React Rendering Explanation</h1>
+    <p>En React, no estamos manipulando directamente el HTML existente en el DOM real. En lugar de eso, estamos creando una representación virtual (DOM Virtual) de lo que debería ser el HTML. Luego, React se encarga de comparar esta representación virtual con el DOM actual y aplicar los cambios necesarios.</p>
+    
+    <h2>Ejemplo 1: Componente Funcional</h2>
+    <pre><code>
+// Importamos React
+import React from 'react';
+
+// Definimos un componente funcional llamado Saludo
+function Saludo() {
+  // El componente retorna un elemento JSX
+  // JSX parece HTML, pero es en realidad una extensión de JavaScript
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;¡Hola, mundo!&lt;/h1&gt;
+    &lt;/div&gt;
+  );
 }
 
-// Uso del componente
-&lt;ComponenteConProps nombre="Juan" edad={30} /&gt;
-</code>
-</pre>
+// Exportamos el componente para usarlo en otra parte de la aplicación
+export default Saludo;
+    </code></pre>
 
-<p>Estado (State)El estado es un objeto que determina cómo se renderiza y se comporta un componente. Es gestionado dentro del componente y puede cambiar con el tiempo.</p>
-<pre>
-<code>
-class ComponenteConEstado extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { contador: 0 };
-  }
+    <h2>Ejemplo 2: Componente de Clase</h2>
+    <pre><code>
+// Importamos React y el componente Component
+import React, { Component } from 'react';
 
+// Definimos un componente de clase llamado Contador
+class Contador extends Component {
+  // Definimos el estado inicial del componente
+  state = {
+    contador: 0
+  };
+
+  // Método que incrementa el contador en 1
   incrementar = () => {
     this.setState({ contador: this.state.contador + 1 });
-  }
+  };
 
+  // Método render que describe cómo se debería ver el componente
   render() {
     return (
       &lt;div&gt;
@@ -64,31 +222,1131 @@ class ComponenteConEstado extends React.Component {
     );
   }
 }
-</code>
-</pre>
 
-<h2></h2>
-<p>Ciclo de Vida Los componentes de clase tienen métodos del ciclo de vida que se invocan en diferentes etapas del ciclo de vida del componente, como montaje, actualización y desmontaje.</p>
-<pre>
-<code>
-class ComponenteCicloDeVida extends React.Component {
-  componentDidMount() {
-    // Código que se ejecuta después de que el componente se ha montado
+// Exportamos el componente para usarlo en otra parte de la aplicación
+export default Contador;
+    </code></pre>
+
+    <h2>Ejemplo 3: Uso del DOM Virtual</h2>
+    <pre><code>
+import React, { useState } from 'react';
+
+// Definimos un componente funcional llamado Lista
+function Lista() {
+  // Definimos el estado inicial con una lista de elementos
+  const [items, setItems] = useState(['Elemento 1', 'Elemento 2', 'Elemento 3']);
+
+  // Método que añade un nuevo elemento a la lista
+  const agregarElemento = () => {
+    setItems([...items, `Elemento ${items.length + 1}`]);
+  };
+
+  // Método render que describe cómo se debería ver el componente
+  return (
+    &lt;div&gt;
+      &lt;ul&gt;
+        {items.map((item, index) => (
+          &lt;li key={index}&gt;{item}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      &lt;button onClick={agregarElemento}&gt;Agregar Elemento&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Exportamos el componente para usarlo en otra parte de la aplicación
+export default Lista;
+    </code></pre>
+
+    <h2>Explicación del Proceso</h2>
+    <p>Cuando defines componentes en React, estás esencialmente creando una descripción de cómo debería ser el HTML usando JSX. React usa esta descripción para crear un DOM Virtual, que es una representación en memoria. Al comparar el DOM Virtual nuevo con el anterior, React puede determinar exactamente qué partes del DOM real necesitan actualizarse y aplicar solo esos cambios, evitando manipulaciones directas y costosas del DOM.</p>
+
+    <h3>Renderizado Inicial:</h3>
+    <p>Cuando <code>ContadorSimple</code> se renderiza por primera vez, React crea una representación en el DOM Virtual que muestra el párrafo con el contador (inicialmente 0) y un botón. React luego usa esta representación para crear y actualizar el DOM real.</p>
+
+    <h3>Actualización del Estado:</h3>
+    <p>Cuando el usuario hace clic en el botón, se llama a la función <code>incrementar</code>, que usa <code>setContador</code> para actualizar el estado. Esto hace que React vuelva a renderizar <code>ContadorSimple</code>.</p>
+
+    <h3>Creación del Nuevo DOM Virtual:</h3>
+    <p>React crea una nueva versión del DOM Virtual con el nuevo valor del contador. Por ejemplo, si el contador era 0 y ahora es 1, la nueva representación virtual del DOM tendrá <code>&lt;p&gt;Contador: 1&lt;/p&gt;</code>.</p>
+
+    <h3>Comparación y Reconciliación:</h3>
+    <p>React compara la nueva representación del DOM Virtual con la anterior. Detecta que solo el texto dentro del párrafo ha cambiado. Calcula el cambio mínimo necesario para actualizar el DOM real: solo necesita cambiar el contenido del párrafo de "Contador: 0" a "Contador: 1".</p>
+
+    <h3>Actualización del DOM Real:</h3>
+    <p>React actualiza el DOM real con estos cambios mínimos, en lugar de reemplazar todo el HTML. Esto hace que las actualizaciones sean más eficientes.</p>
+
+    <h2>En Resumen</h2>
+    <p>Creación: Cuando defines componentes en React, estás esencialmente creando una descripción de cómo debería ser el HTML usando JSX.</p>
+    <p>DOM Virtual: React usa esta descripción para crear un DOM Virtual, que es una representación en memoria.</p>
+    <p>Actualización Eficiente: Al comparar el DOM Virtual nuevo con el anterior, React puede determinar exactamente qué partes del DOM real necesitan actualizarse y aplicar solo esos cambios, evitando manipulaciones directas y costosas del DOM.</p>
+
+    <p>Este enfoque hace que el desarrollo sea más sencillo y que las aplicaciones sean más rápidas y eficientes en términos de rendimiento.</p>
+
+    <h1>Ciclo de Vida de los Componentes en React</h1>
+    <p>El ciclo de vida de un componente en React se divide en tres fases principales:</p>
+    <ul>
+        <li><strong>Montaje (Mounting):</strong> Cuando se crea y se inserta el componente en el DOM.</li>
+        <li><strong>Actualización (Updating):</strong> Cuando se actualiza el estado o las props del componente.</li>
+        <li><strong>Desmontaje (Unmounting):</strong> Cuando se elimina el componente del DOM.</li>
+    </ul>
+    
+    <h2>Fase de Montaje</h2>
+    <ul>
+        <li><code>constructor(props)</code>: Método opcional que se llama antes de montar el componente. Usualmente se usa para inicializar el estado y enlazar métodos.</li>
+        <li><code>static getDerivedStateFromProps(props, state)</code>: Método estático que se llama justo antes de renderizar el componente. Se usa para actualizar el estado basado en las props.</li>
+        <li><code>render()</code>: Método obligatorio que describe la UI del componente.</li>
+        <li><code>componentDidMount()</code>: Método que se llama justo después de que el componente se monta en el DOM. Es un buen lugar para inicializar peticiones a APIs.</li>
+    </ul>
+
+    <h2>Fase de Actualización</h2>
+    <ul>
+        <li><code>static getDerivedStateFromProps(props, state)</code>: Se llama cada vez que el componente recibe nuevas props o estado.</li>
+        <li><code>shouldComponentUpdate(nextProps, nextState)</code>: Método que se llama antes de renderizar el componente. Permite optimizar la re-renderización devolviendo <code>false</code> si no es necesario actualizar.</li>
+        <li><code>render()</code>: Describe la UI del componente con las nuevas props o estado.</li>
+        <li><code>getSnapshotBeforeUpdate(prevProps, prevState)</code>: Método que se llama justo antes de actualizar el DOM. Se puede usar para capturar la información actual del DOM.</li>
+        <li><code>componentDidUpdate(prevProps, prevState, snapshot)</code>: Método que se llama justo después de que el componente se actualiza. Se puede usar para ejecutar acciones adicionales basadas en el DOM actualizado.</li>
+    </ul>
+
+    <h2>Fase de Desmontaje</h2>
+    <ul>
+        <li><code>componentWillUnmount()</code>: Método que se llama justo antes de desmontar y destruir el componente. Es el lugar adecuado para realizar cualquier limpieza necesaria, como cancelar peticiones a APIs o liberar recursos.</li>
+    </ul>
+
+    <h2>Ejemplo Resumido</h2>
+    <pre><code>
+// Importamos React y Component
+import React, { Component } from 'react';
+
+class MiComponente extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { contador: 0 };
+    console.log('Constructor');
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // Código que se ejecuta después de que el componente se ha actualizado
+  static getDerivedStateFromProps(props, state) {
+    console.log('getDerivedStateFromProps');
+    return null; // Retornar nuevo estado o null
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('shouldComponentUpdate');
+    return true; // Retornar true o false
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('getSnapshotBeforeUpdate');
+    return null; // Retornar valor para snapshot
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('componentDidUpdate');
   }
 
   componentWillUnmount() {
-    // Código que se ejecuta justo antes de que el componente se desmonte
+    console.log('componentWillUnmount');
   }
 
   render() {
-    return &lt;div&gt;Componente con ciclo de vida&lt;/div&gt;;
+    console.log('Render');
+    return (
+      &lt;div&gt;
+        &lt;p&gt;Contador: {this.state.contador}&lt;/p&gt;
+        &lt;button onClick={() => this.setState({ contador: this.state.contador + 1 })&gt;Incrementar&lt;/button&gt;
+      &lt;/div&gt;
+    );
   }
 }
-</code>
-</pre>
+
+export default MiComponente;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <p><strong>Montaje:</strong> <code>constructor</code>, <code>getDerivedStateFromProps</code>, <code>render</code>, <code>componentDidMount</code>.</p>
+    <p><strong>Actualización:</strong> <code>getDerivedStateFromProps</code>, <code>shouldComponentUpdate</code>, <code>render</code>, <code>getSnapshotBeforeUpdate</code>, <code>componentDidUpdate</code>.</p>
+    <p><strong>Desmontaje:</strong> <code>componentWillUnmount</code>.</p>
+    <p>Estos métodos permiten controlar el comportamiento del componente en cada una de estas fases, facilitando la gestión del estado, las props y la interacción con el DOM.https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/</p>
+    <h1>Listas y Claves en React</h1>
+
+    <h2>Listas</h2>
+    <p>En React, cuando necesitas renderizar múltiples elementos, puedes usar la función <code>map()</code> para crear una lista de elementos. Por ejemplo, si tienes un array de datos, puedes transformarlo en una lista de componentes JSX.</p>
+
+    <h2>Claves (Keys)</h2>
+    <p>Las claves son atributos especiales que debes incluir al crear listas de elementos en React. Ayudan a React a identificar qué ítems han cambiado, han sido añadidos o eliminados. Las claves deben ser únicas entre los elementos hermanos.</p>
+
+    <h2>Ejemplo Resumido</h2>
+
+    <h3>Código sin claves (keys)</h3>
+    <pre><code>
+import React from 'react';
+
+function ListaNombres(props) {
+  const nombres = ['Alice', 'Bob', 'Charlie'];
+
+  return (
+    &lt;ul&gt;
+      {nombres.map((nombre, index) => (
+        &lt;li key={index}&gt;{nombre}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+export default ListaNombres;
+    </code></pre>
+
+    <h3>Código con claves (keys)</h3>
+    <pre><code>
+import React from 'react';
+
+function ListaNombres(props) {
+  const nombres = ['Alice', 'Bob', 'Charlie'];
+
+  return (
+    &lt;ul&gt;
+      {nombres.map((nombre) => (
+        &lt;li key={nombre}&gt;{nombre}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  );
+}
+
+export default ListaNombres;
+    </code></pre>
+
+    <h2>Por qué usar claves (keys)</h2>
+    <ul>
+        <li><strong>Rendimiento:</strong> Ayudan a React a optimizar la renderización de listas, actualizando solo los elementos que han cambiado.</li>
+        <li><strong>Identificación única:</strong> Proveen una manera de identificar cada elemento de la lista de forma única.</li>
+    </ul>
+
+    <h2>Reglas para las claves (keys)</h2>
+    <ol>
+        <li>Las claves deben ser únicas entre los elementos hermanos.</li>
+        <li>No uses índices del array como claves si el orden de los elementos puede cambiar, ya que esto puede causar problemas de rendimiento y errores en la actualización de la UI.</li>
+    </ol>
+
+    <h2>Resumen</h2>
+    <p>Usa la función <code>map()</code> para crear listas de elementos en React.</p>
+    <p>Siempre asigna una clave (<code>key</code>) única a cada elemento de la lista.</p>
+    <p>Las claves ayudan a React a identificar y gestionar eficientemente las actualizaciones de los elementos de la lista.</p>
+    <h1>Render Props en React</h1>
+    <p>Render Props es una técnica para compartir lógica entre componentes en React mediante una propiedad cuyo valor es una función. Esta técnica permite que los componentes reciban una función que renderiza algo, dándoles así más flexibilidad.</p>
+
+    <h2>Ejemplo de Render Props</h2>
+    <p>Vamos a crear un componente que usa Render Props para compartir lógica de estado entre componentes.</p>
+
+    <h3>Componente <code>Mouse</code> usando Render Props</h3>
+    <pre><code>
+// Importamos React y Component
+import React, { Component } from 'react';
+
+// Componente que gestiona el estado del mouse
+class Mouse extends Component {
+  constructor(props) {
+    super(props);
+    // Inicializa el estado con la posición del mouse
+    this.state = { x: 0, y: 0 };
+  }
+
+  // Método para actualizar la posición del mouse en el estado
+  handleMouseMove = (event) => {
+    this.setState({
+      x: event.clientX,
+      y: event.clientY
+    });
+  };
+
+  render() {
+    return (
+      // Div que captura el movimiento del mouse y llama a handleMouseMove
+      &lt;div style={{ height: '100vh' }} onMouseMove={this.handleMouseMove}&gt;
+        {/* Llama a la función render que se pasa como prop, pasándole la posición del mouse */}
+        {this.props.render(this.state)}
+      &lt;/div&gt;
+    );
+  }
+}
+
+// Componente que muestra la posición del mouse
+function MostrarPosicionDelMouse(props) {
+  return (
+    &lt;p&gt;La posición del mouse es: ({props.x}, {props.y})&lt;/p&gt;
+  );
+}
+
+// Componente principal que utiliza el componente Mouse con render props
+class App extends Component {
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;Usando Render Props&lt;/h1&gt;
+        {/* Usa el componente Mouse y pasa una función de render como prop */}
+        &lt;Mouse render={(mouseState) => (
+          &lt;MostrarPosicionDelMouse x={mouseState.x} y={mouseState.y} /&gt;
+        )} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Explicación del Código</h2>
+    <p><strong>Componente <code>Mouse</code>:</strong></p>
+    <ul>
+        <li><strong>Estado:</strong> Almacena la posición del mouse (<code>x</code> y <code>y</code>).</li>
+        <li><strong>Método <code>handleMouseMove</code>:</strong> Actualiza el estado con la posición del mouse cuando se mueve.</li>
+        <li><strong>Método <code>render</code>:</strong> Renderiza un <code>div</code> que captura el movimiento del mouse y llama a la función <code>render</code> pasada como prop, pasándole la posición del mouse desde el estado.</li>
+    </ul>
+
+    <p><strong>Componente <code>MostrarPosicionDelMouse</code>:</strong></p>
+    <ul>
+        <li><strong>Propiedades:</strong> Recibe <code>x</code> y <code>y</code> como props y muestra la posición del mouse en un párrafo.</li>
+    </ul>
+
+    <p><strong>Componente <code>App</code>:</strong></p>
+    <ul>
+        <li><strong>Uso de <code>Mouse</code>:</strong> Renderiza el componente <code>Mouse</code> y le pasa una función de render que renderiza el componente <code>MostrarPosicionDelMouse</code> con la posición del mouse.</li>
+    </ul>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Render Props:</strong> Técnica para compartir lógica entre componentes mediante una propiedad que es una función.</li>
+        <li><strong>Flexibilidad:</strong> Permite a los componentes recibir una función que renderiza algo, proporcionando una forma flexible de compartir y reutilizar lógica.</li>
+    </ul>
+    <h1>Refs, Eventos y Componentes de Orden Superior (HOCs) en React</h1>
+
+    <h2>Refs en React</h2>
+    <p>Refs (referencias) proporcionan una forma de acceder directamente a los elementos DOM o a las instancias de componentes React en la aplicación. Son útiles cuando necesitas manipular el DOM directamente, por ejemplo, para enfocar un campo de entrada.</p>
+    <h3>Ejemplo de Refs</h3>
+    <pre><code>
+import React, { Component } from 'react';
+
+class MiComponente extends Component {
+  constructor(props) {
+    super(props);
+    // Crear una referencia con React.createRef()
+    this.miRef = React.createRef();
+  }
+
+  componentDidMount() {
+    // Usar la referencia para enfocar el campo de entrada
+    this.miRef.current.focus();
+  }
+
+  render() {
+    return (
+      &lt;div&gt;
+        &lt;input type="text" ref={this.miRef} /&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+export default MiComponente;
+    </code></pre>
+
+    <h2>Eventos en React</h2>
+    <p>Manejar eventos en React es similar a manejar eventos en el DOM, pero con algunas diferencias sintácticas. En React, los eventos se nombran usando camelCase y se pasan funciones como manejadores de eventos.</p>
+    <h3>Ejemplo de Eventos</h3>
+    <pre><code>
+import React, { Component } from 'react';
+
+class ManejarEventos extends Component {
+  handleClick = () => {
+    alert('Botón clickeado');
+  }
+
+  render() {
+    return (
+      &lt;button onClick={this.handleClick}&gt;Clic aquí&lt;/button&gt;
+    );
+  }
+}
+
+export default ManejarEventos;
+    </code></pre>
+
+    <h2>Componentes de Orden Superior (High Order Components - HOCs)</h2>
+    <p>Un Componente de Orden Superior (HOC) es una función que toma un componente y devuelve un nuevo componente con funcionalidades adicionales. Los HOCs son una forma de reutilizar lógica entre componentes.</p>
+    <h3>Ejemplo de HOC</h3>
+    <pre><code>
+import React from 'react';
+
+// Función que crea un HOC
+function withSaludo(WrappedComponent) {
+  return class extends React.Component {
+    render() {
+      return (
+        &lt;div&gt;
+          &lt;p&gt;¡Hola!&lt;/p&gt;
+          &lt;WrappedComponent {...this.props} /&gt;
+        &lt;/div&gt;
+      );
+    }
+  }
+}
+
+// Componente simple
+class MiComponente extends React.Component {
+  render() {
+    return &lt;p&gt;Componente envuelto&lt;/p&gt;;
+  }
+}
+
+// Componente envuelto con HOC
+const MiComponenteConSaludo = withSaludo(MiComponente);
+
+export default MiComponenteConSaludo;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Refs:</strong> Proporcionan una forma de acceder directamente a los elementos del DOM o a las instancias de componentes React.</li>
+        <li><strong>Eventos:</strong> Se manejan de forma similar a los eventos del DOM, pero con una sintaxis diferente en React.</li>
+        <li><strong>Componentes de Orden Superior (HOCs):</strong> Son funciones que toman un componente y devuelven un nuevo componente con funcionalidades adicionales.</li>
+    </ul>
+    <h1>Hooks en React: useState, useEffect y Custom Hooks</h1>
+
+    <h2>useState</h2>
+    <p>El hook <code>useState</code> permite agregar estado a los componentes funcionales. Retorna un par de valores: el estado actual y una función para actualizarlo.</p>
+    <h3>Ejemplo de <code>useState</code></h3>
+    <pre><code>
+import React, { useState } from 'react';
+
+function Contador() {
+  // Declaración de una variable de estado llamada "contador" y una función para actualizarla
+  const [contador, setContador] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Has clickeado {contador} veces&lt;/p&gt;
+      &lt;button onClick={() => setContador(contador + 1)}&gt;Incrementar&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Contador;
+    </code></pre>
+
+    <h2>useEffect</h2>
+    <p>El hook <code>useEffect</code> permite realizar efectos secundarios en componentes funcionales. Es equivalente a los métodos de ciclo de vida <code>componentDidMount</code>, <code>componentDidUpdate</code> y <code>componentWillUnmount</code> combinados en componentes de clase.</p>
+    <h3>Ejemplo de <code>useEffect</code></h3>
+    <pre><code>
+import React, { useState, useEffect } from 'react';
+
+function ContadorConEfecto() {
+  const [contador, setContador] = useState(0);
+
+  // Similar a componentDidMount y componentDidUpdate
+  useEffect(() => {
+    // Actualiza el título del documento usando la API del navegador
+    document.title = `Has clickeado ${contador} veces`;
+  }, [contador]); // Solo vuelve a ejecutar el efecto si "contador" cambia
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Has clickeado {contador} veces&lt;/p&gt;
+      &lt;button onClick={() => setContador(contador + 1)}&gt;Incrementar&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default ContadorConEfecto;
+    </code></pre>
+
+    <h2>Custom Hooks</h2>
+    <p>Los Custom Hooks permiten extraer lógica de estado reutilizable fuera de un componente. Un Custom Hook es una función de JavaScript cuyo nombre comienza con "use" y que puede llamar a otros hooks.</p>
+    <h3>Ejemplo de Custom Hook</h3>
+    <p>Vamos a crear un Custom Hook para gestionar el título del documento.</p>
+    <pre><code>
+import { useEffect } from 'react';
+
+// Custom Hook para actualizar el título del documento
+function useTituloDocumento(titulo) {
+  useEffect(() => {
+    document.title = titulo;
+  }, [titulo]); // Solo vuelve a ejecutar el efecto si "titulo" cambia
+}
+
+export default useTituloDocumento;
+    </code></pre>
+
+    <h3>Uso del Custom Hook</h3>
+    <pre><code>
+import React, { useState } from 'react';
+import useTituloDocumento from './useTituloDocumento';
+
+function ContadorConTitulo() {
+  const [contador, setContador] = useState(0);
+
+  // Usamos nuestro Custom Hook para actualizar el título del documento
+  useTituloDocumento(`Has clickeado ${contador} veces`);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Has clickeado {contador} veces&lt;/p&gt;
+      &lt;button onClick={() => setContador(contador + 1)}&gt;Incrementar&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default ContadorConTitulo;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong><code>useState</code>:</strong> Hook para agregar estado a componentes funcionales.</li>
+        <li><strong><code>useEffect</code>:</strong> Hook para manejar efectos secundarios en componentes funcionales.</li>
+        <li><strong>Custom Hooks:</strong> Funciones que permiten extraer lógica de estado reutilizable fuera de un componente.</li>
+        <li><strong>Hay muchos Common Hooks ver documentación</strong></li>
+    </ul>
+    <h1>Routing en React</h1>
+
+    <h2>Instalación</h2>
+    <p>Primero, necesitas instalar <code>react-router-dom</code> en tu proyecto de React:</p>
+    <pre><code>
+npm install react-router-dom
+    </code></pre>
+
+    <h2>Configuración Básica</h2>
+    <p>Para configurar el enrutamiento en tu aplicación, necesitas usar los componentes <code>BrowserRouter</code>, <code>Route</code> y <code>Link</code> de <code>react-router-dom</code>.</p>
+
+    <h3>Ejemplo de Enrutamiento Básico</h3>
+    <pre><code>
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+
+// Componentes de ejemplo
+function Home() {
+  return &lt;h2&gt;Inicio&lt;/h2&gt;;
+}
+
+function About() {
+  return &lt;h2&gt;Acerca de&lt;/h2&gt;;
+}
+
+function Users() {
+  return &lt;h2&gt;Usuarios&lt;/h2&gt;;
+}
+
+// Componente principal de la aplicación con enrutamiento
+function App() {
+  return (
+    &lt;Router&gt;
+      &lt;div&gt;
+        &lt;nav&gt;
+          &lt;ul&gt;
+            &lt;li&gt;
+              &lt;Link to="/"&gt;Inicio&lt;/Link&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+              &lt;Link to="/about"&gt;Acerca de&lt;/Link&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+              &lt;Link to="/users"&gt;Usuarios&lt;/Link&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/nav&gt;
+
+        {/* Configuración de las rutas */}
+        &lt;Switch&gt;
+          &lt;Route path="/about"&gt;
+            &lt;About /&gt;
+          &lt;/Route&gt;
+          &lt;Route path="/users"&gt;
+            &lt;Users /&gt;
+          &lt;/Route&gt;
+          &lt;Route path="/"&gt;
+            &lt;Home /&gt;
+          &lt;/Route&gt;
+        &lt;/Switch&gt;
+      &lt;/div&gt;
+    &lt;/Router&gt;
+  );
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Rutas Anidadas</h2>
+    <p>Puedes crear rutas anidadas definiendo rutas dentro de componentes que ya están siendo renderizados por una ruta.</p>
+
+    <h3>Ejemplo de Rutas Anidadas</h3>
+    <pre><code>
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link, useRouteMatch } from 'react-router-dom';
+
+function Topic({ match }) {
+  return &lt;h3&gt;Solicitado {match.params.topicId}&lt;/h3&gt;;
+}
+
+function Topics() {
+  let { path, url } = useRouteMatch();
+
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Temas&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;
+          &lt;Link to={`${url}/rendering`}&gt;Rendering con React&lt;/Link&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;Link to={`${url}/components`}&gt;Componentes&lt;/Link&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;Link to={`${url}/props-v-state`}&gt;Props v. State&lt;/Link&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+
+      &lt;Switch&gt;
+        &lt;Route exact path={path}&gt;
+          &lt;h3&gt;Por favor, selecciona un tema.&lt;/h3&gt;
+        &lt;/Route&gt;
+        &lt;Route path={`${path}/:topicId`}&gt;
+          &lt;Topic /&gt;
+        &lt;/Route&gt;
+      &lt;/Switch&gt;
+    &lt;/div&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;Router&gt;
+      &lt;div&gt;
+        &lt;nav&gt;
+          &lt;ul&gt;
+            &lt;li&gt;
+              &lt;Link to="/"&gt;Inicio&lt;/Link&gt;
+            &lt;/li&gt;
+            &lt;li&gt;
+              &lt;Link to="/topics"&gt;Temas&lt;/Link&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/nav&gt;
+
+        &lt;Switch&gt;
+          &lt;Route path="/topics"&gt;
+            &lt;Topics /&gt;
+          &lt;/Route&gt;
+          &lt;Route path="/"&gt;
+            &lt;Home /&gt;
+          &lt;/Route&gt;
+        &lt;/Switch&gt;
+      &lt;/div&gt;
+    &lt;/Router&gt;
+  );
+}
+
+function Home() {
+  return &lt;h2&gt;Inicio&lt;/h2&gt;;
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong><code>BrowserRouter</code>:</strong> Habilita el uso del enrutamiento en la aplicación.</li>
+        <li><strong><code>Route</code>:</strong> Define las rutas y los componentes que se deben renderizar.</li>
+        <li><strong><code>Link</code>:</strong> Proporciona enlaces de navegación que permiten cambiar la URL sin recargar la página.</li>
+        <li><strong>Rutas Anidadas:</strong> Permiten crear subrutas dentro de componentes.</li>
+    </ul>
+    <h1>Gestión del Estado en React</h1>
+
+    <h2>Estado Local</h2>
+    <p>El estado local es el estado que pertenece a un componente específico y se gestiona utilizando el hook <code>useState</code>.</p>
+    <h3>Ejemplo de Estado Local</h3>
+    <pre><code>
+import React, { useState } from 'react';
+
+function Contador() {
+  // Estado local con useState
+  const [contador, setContador] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Has clickeado {contador} veces&lt;/p&gt;
+      &lt;button onClick={() => setContador(contador + 1)}&gt;Incrementar&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Contador;
+    </code></pre>
+
+    <h2>Estado Global con Context API</h2>
+    <p>La Context API de React permite compartir valores (estado) entre componentes sin necesidad de pasar props manualmente a través de cada nivel del árbol de componentes.</p>
+    <h3>Ejemplo de Context API</h3>
+    <pre><code>
+import React, { useState, createContext, useContext } from 'react';
+
+// Crear el contexto
+const ContadorContext = createContext();
+
+function ContadorProvider({ children }) {
+  // Estado compartido
+  const [contador, setContador] = useState(0);
+
+  return (
+    &lt;ContadorContext.Provider value={{ contador, setContador }}&gt;
+      {children}
+    &lt;/ContadorContext.Provider&gt;
+  );
+}
+
+function MostrarContador() {
+  // Usar el contexto
+  const { contador } = useContext(ContadorContext);
+  return &lt;p&gt;El contador es: {contador}&lt;/p&gt;;
+}
+
+function IncrementarContador() {
+  // Usar el contexto
+  const { setContador } = useContext(ContadorContext);
+  return &lt;button onClick={() => setContador((prev) => prev + 1)}&gt;Incrementar&lt;/button&gt;;
+}
+
+function App() {
+  return (
+    &lt;ContadorProvider&gt;
+      &lt;MostrarContador /&gt;
+      &lt;IncrementarContador /&gt;
+    &lt;/ContadorProvider&gt;
+  );
+}
+
+export default App;
+    </code></pre>
+
+    <h2>Estado Global con Redux</h2>
+    <p>Redux es una biblioteca para la gestión del estado que es útil para aplicaciones más grandes donde el estado se vuelve más complicado de manejar. Proporciona una única fuente de verdad para todo el estado de la aplicación.</p>
+    <h3>Ejemplo de Redux</h3>
+
+    <h4>Instalación de Redux y React-Redux</h4>
+    <pre><code>
+npm install redux react-redux
+    </code></pre>
+
+    <h4>Configuración de Redux</h4>
+    <pre><code>
+// store.js
+import { createStore } from 'redux';
+
+// Estado inicial
+const initialState = {
+  contador: 0,
+};
+
+// Reducer
+function contadorReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'INCREMENTAR':
+      return { contador: state.contador + 1 };
+    default:
+      return state;
+  }
+}
+
+// Crear el store
+const store = createStore(contadorReducer);
+
+export default store;
+    </code></pre>
+
+    <h4>Proveer el Store a la Aplicación</h4>
+    <pre><code>
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import store from './store';
+
+// Componente para mostrar el contador
+function MostrarContador() {
+  const contador = useSelector((state) => state.contador);
+  return &lt;p&gt;El contador es: {contador}&lt;/p&gt;;
+}
+
+// Componente para incrementar el contador
+function IncrementarContador() {
+  const dispatch = useDispatch();
+  return &lt;button onClick={() => dispatch({ type: 'INCREMENTAR' })}&gt;Incrementar&lt;/button&gt;;
+}
+
+function App() {
+  return (
+    &lt;div&gt;
+      &lt;MostrarContador /&gt;
+      &lt;IncrementarContador /&gt;
+    &lt;/div&gt;
+  );
+}
+
+ReactDOM.render(
+  &lt;Provider store={store}&gt;
+    &lt;App /&gt;
+  &lt;/Provider&gt;,
+  document.getElementById('root')
+);
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Estado Local:</strong> Manejado con <code>useState</code> dentro de componentes individuales.</li>
+        <li><strong>Context API:</strong> Proporciona una forma de compartir estado entre componentes sin necesidad de pasar props manualmente.</li>
+        <li><strong>Redux:</strong> Proporciona una solución para la gestión del estado global en aplicaciones grandes y complejas.</li>
+    </ul>
+    <h1>Métodos de Estilización en React</h1>
+
+    <h2>CSS Tradicional</h2>
+    <p>Puedes usar archivos CSS tradicionales para estilizar tus componentes. Solo necesitas importar el archivo CSS en tu componente.</p>
+    <h3>Ejemplo de CSS Tradicional</h3>
+    <pre><code>
+/* styles.css */
+.contenedor {
+  text-align: center;
+}
+
+.boton {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+    </code></pre>
+    <pre><code>
+import React from 'react';
+import './styles.css';
+
+function ComponenteConCSS() {
+  return (
+    &lt;div className="contenedor"&gt;
+      &lt;h1&gt;Hola, mundo&lt;/h1&gt;
+      &lt;button className="boton"&gt;Clic aquí&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default ComponenteConCSS;
+    </code></pre>
+
+    <h2>CSS Modules</h2>
+    <p>CSS Modules permiten escribir CSS que es local al componente por defecto, evitando conflictos de nombres.</p>
+    <h3>Ejemplo de CSS Modules</h3>
+    <pre><code>
+/* ComponenteConCSS.module.css */
+.contenedor {
+  text-align: center;
+}
+
+.boton {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+    </code></pre>
+    <pre><code>
+import React from 'react';
+import styles from './ComponenteConCSS.module.css';
+
+function ComponenteConCSSModules() {
+  return (
+    &lt;div className={styles.contenedor}&gt;
+      &lt;h1&gt;Hola, mundo&lt;/h1&gt;
+      &lt;button className={styles.boton}&gt;Clic aquí&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default ComponenteConCSSModules;
+    </code></pre>
+
+    <h2>CSS-in-JS (Styled Components)</h2>
+    <p>Styled Components es una biblioteca que permite escribir estilos en JavaScript. Los estilos se aplican directamente a los componentes.</p>
+    <h3>Ejemplo de Styled Components</h3>
+    <pre><code>
+import React from 'react';
+import styled from 'styled-components';
+
+const Contenedor = styled.div`
+  text-align: center;
+`;
+
+const Boton = styled.button`
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+`;
+
+function ComponenteConStyledComponents() {
+  return (
+    &lt;Contenedor&gt;
+      &lt;h1&gt;Hola, mundo&lt;/h1&gt;
+      &lt;Boton&gt;Clic aquí&lt;/Boton&gt;
+    &lt;/Contenedor&gt;
+  );
+}
+
+export default ComponenteConStyledComponents;
+    </code></pre>
+
+    <h2>Inline Styles</h2>
+    <p>También puedes aplicar estilos directamente en los componentes utilizando el atributo <code>style</code> en formato de objeto.</p>
+    <h3>Ejemplo de Inline Styles</h3>
+    <pre><code>
+import React from 'react';
+
+function ComponenteConInlineStyles() {
+  const estilosContenedor = {
+    textAlign: 'center',
+  };
+
+  const estilosBoton = {
+    backgroundColor: 'blue',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    cursor: 'pointer',
+  };
+
+  return (
+    &lt;div style={estilosContenedor}&gt;
+      &lt;h1&gt;Hola, mundo&lt;/h1&gt;
+      &lt;button style={estilosBoton}&gt;Clic aquí&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default ComponenteConInlineStyles;
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>CSS Tradicional:</strong> Usa archivos CSS externos.</li>
+        <li><strong>CSS Modules:</strong> Permite estilos encapsulados y evita conflictos de nombres.</li>
+        <li><strong>CSS-in-JS (Styled Components):</strong> Escribe estilos en JavaScript y aplícalos directamente a los componentes.</li>
+        <li><strong>Inline Styles:</strong> Aplica estilos directamente en el componente usando objetos JavaScript.</li>
+    </ul>
+    <h1>Llamadas a APIs en React: REST y GraphQL</h1>
+
+    <h2>Llamadas a APIs REST</h2>
+    <p>REST (Representational State Transfer) es una arquitectura que utiliza HTTP para interactuar con recursos a través de métodos como GET, POST, PUT y DELETE.</p>
+    <h3>Ejemplo de Llamada a una API REST</h3>
+    <h4>Usando <code>fetch</code></h4>
+    <pre><code>
+import React, { useState, useEffect } from 'react';
+
+function DatosUsuario() {
+  const [datos, setDatos] = useState(null);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users/1')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error en la respuesta de la API');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setDatos(data);
+        setCargando(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setCargando(false);
+      });
+  }, []);
+
+  if (cargando) {
+    return &lt;p&gt;Cargando...&lt;/p&gt;;
+  }
+
+  if (error) {
+    return &lt;p&gt;Error: {error.message}&lt;/p&gt;;
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{datos.name}&lt;/h1&gt;
+      &lt;p&gt;{datos.email}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default DatosUsuario;
+    </code></pre>
+
+    <h2>Llamadas a APIs GraphQL</h2>
+    <p>GraphQL es un lenguaje de consulta para APIs que permite a los clientes solicitar exactamente los datos que necesitan, proporcionando más flexibilidad y eficiencia en comparación con REST.</p>
+    <h3>Ejemplo de Llamada a una API GraphQL</h3>
+    <h4>Instalación de Apollo Client</h4>
+    <pre><code>
+npm install @apollo/client graphql
+    </code></pre>
+
+    <h4>Configuración de Apollo Client</h4>
+    <pre><code>
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ApolloProvider, ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client';
+
+// Configurar Apollo Client
+const client = new ApolloClient({
+  uri: 'https://your-graphql-endpoint.com/graphql',
+  cache: new InMemoryCache(),
+});
+
+const OBTENER_USUARIO = gql`
+  query GetUsuario($id: ID!) {
+    usuario(id: $id) {
+      id
+      name
+      email
+    }
+  }
+`;
+
+function DatosUsuario({ id }) {
+  const { loading, error, data } = useQuery(OBTENER_USUARIO, {
+    variables: { id },
+  });
+
+  if (loading) return &lt;p&gt;Cargando...&lt;/p&gt;;
+  if (error) return &lt;p&gt;Error: {error.message}&lt;/p&gt;;
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{data.usuario.name}&lt;/h1&gt;
+      &lt;p&gt;{data.usuario.email}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;ApolloProvider client={client}&gt;
+      &lt;DatosUsuario id="1" /&gt;
+    &lt;/ApolloProvider&gt;
+  );
+}
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>REST:</strong> Utiliza métodos HTTP para interactuar con recursos. Puedes usar <code>fetch</code> o bibliotecas como Axios para hacer llamadas REST.</li>
+        <li><strong>GraphQL:</strong> Permite a los clientes solicitar exactamente los datos que necesitan. Apollo Client es una popular biblioteca para interactuar con APIs GraphQL.</li>
+    </ul>
+    <h1>Testing en React: Jest y React Testing Library</h1>
+
+    <h2>Instalación de Herramientas de Testing</h2>
+    <p>Primero, instala Jest y React Testing Library en tu proyecto de React:</p>
+    <pre><code>
+npm install --save-dev jest @testing-library/react @testing-library/jest-dom
+    </code></pre>
+
+    <h2>Configuración Básica</h2>
+    <p>La mayoría de los proyectos de React creados con Create React App ya tienen Jest configurado. Si no es así, puedes configurar Jest añadiendo una sección en tu <code>package.json</code>:</p>
+    <pre><code>
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+    </code></pre>
+
+    <h2>Escribiendo Pruebas con Jest y React Testing Library</h2>
+    <h3>Ejemplo de Prueba para un Componente</h3>
+    <h4>Componente React</h4>
+    <pre><code>
+// ComponenteConContador.jsx
+import React, { useState } from 'react';
+
+function ComponenteConContador() {
+  const [contador, setContador] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Has clickeado {contador} veces&lt;/p&gt;
+      &lt;button onClick={() => setContador(contador + 1)}&gt;Incrementar&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default ComponenteConContador;
+    </code></pre>
+
+    <h4>Escribiendo Pruebas</h4>
+    <pre><code>
+// ComponenteConContador.test.jsx
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import ComponenteConContador from './ComponenteConContador';
+
+test('muestra el mensaje inicial correctamente', () => {
+  render(&lt;ComponenteConContador /&gt;);
+  expect(screen.getByText(/Has clickeado 0 veces/i)).toBeInTheDocument();
+});
+
+test('incrementa el contador al hacer clic en el botón', () => {
+  render(&lt;ComponenteConContador /&gt;);
+  fireEvent.click(screen.getByText(/Incrementar/i));
+  expect(screen.getByText(/Has clickeado 1 vez/i)).toBeInTheDocument();
+});
+    </code></pre>
+
+    <h2>Pruebas Snapshot</h2>
+    <p>Las pruebas snapshot permiten verificar que la salida renderizada de un componente no cambie inesperadamente. Jest viene con soporte integrado para pruebas snapshot.</p>
+    <h3>Ejemplo de Prueba Snapshot</h3>
+    <h4>Componente React</h4>
+    <pre><code>
+// ComponenteSimple.jsx
+import React from 'react';
+
+function ComponenteSimple() {
+  return &lt;div&gt;Hola, mundo&lt;/div&gt;;
+}
+
+export default ComponenteSimple;
+    </code></pre>
+
+    <h4>Escribiendo Pruebas Snapshot</h4>
+    <pre><code>
+// ComponenteSimple.test.jsx
+import React from 'react';
+import renderer from 'react-test-renderer';
+import ComponenteSimple from './ComponenteSimple';
+
+test('coincide con el snapshot', () => {
+  const tree = renderer.create(&lt;ComponenteSimple /&gt;).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Jest:</strong> Herramienta de testing para JavaScript con soporte para pruebas unitarias y snapshot.</li>
+        <li><strong>React Testing Library:</strong> Herramienta para renderizar componentes en un entorno de prueba y realizar pruebas de integración y de usuario.</li>
+        <li><strong>Pruebas Unitarias:</strong> Verifican el comportamiento de componentes individuales.</li>
+        <li><strong>Pruebas Snapshot:</strong> Verifican que la salida renderizada de un componente no cambie inesperadamente.</li>
+    </ul>
+
 </body>
 </html>
