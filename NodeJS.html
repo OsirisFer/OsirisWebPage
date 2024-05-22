@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="CheatSheetCss.css">
+    <script src="PruebaPrueba.js"></script>
+    <title>Nodejs</title>
+</head>
+<body>
+   <h1>Nodejs</h1>
+   <h1>Módulos en Node.js</h1>
+
+   <h2>CommonJS</h2>
+   <p>CommonJS es el sistema de módulos predeterminado en Node.js. Utiliza <code>require</code> para importar módulos y <code>module.exports</code> para exportarlos.</p>
+   <h3>Ejemplo de CommonJS</h3>
+   <h4>Exportar un Módulo</h4>
+   <pre><code>
+   // archivo: sumar.js
+   function sumar(a, b) {
+     return a + b;
+   }
+
+   module.exports = sumar;
+   </code></pre>
+   <h4>Importar un Módulo</h4>
+   <pre><code>
+   // archivo: app.js
+   const sumar = require('./sumar');
+
+   const resultado = sumar(2, 3);
+   console.log(resultado); // Salida: 5
+   </code></pre>
+
+   <h2>ECMAScript Modules (ESM)</h2>
+   <p>ESM es el sistema de módulos más moderno y está basado en la especificación de JavaScript. Utiliza <code>import</code> para importar módulos y <code>export</code> para exportarlos.</p>
+   <h3>Ejemplo de ESM</h3>
+   <h4>Exportar un Módulo</h4>
+   <pre><code>
+   // archivo: sumar.mjs
+   export function sumar(a, b) {
+     return a + b;
+   }
+   </code></pre>
+   <h4>Importar un Módulo</h4>
+   <pre><code>
+   // archivo: app.mjs
+   import { sumar } from './sumar.mjs';
+
+   const resultado = sumar(2, 3);
+   console.log(resultado); // Salida: 5
+   </code></pre>
+
+   <h2>Crear Módulos Personalizados</h2>
+   <p>Puedes crear tus propios módulos personalizados en Node.js para encapsular funcionalidad y reutilizar el código.</p>
+   <h3>Ejemplo de Módulo Personalizado</h3>
+   <h4>Crear un Módulo Personalizado</h4>
+   <pre><code>
+   // archivo: calculadora.js
+   function sumar(a, b) {
+     return a + b;
+   }
+
+   function restar(a, b) {
+     return a - b;
+   }
+
+   module.exports = {
+     sumar,
+     restar,
+   };
+   </code></pre>
+   <h4>Usar el Módulo Personalizado</h4>
+   <pre><code>
+   // archivo: app.js
+   const calculadora = require('./calculadora');
+
+   const suma = calculadora.sumar(5, 3);
+   const resta = calculadora.restar(5, 3);
+
+   console.log(`Suma: ${suma}`); // Salida: Suma: 8
+   console.log(`Resta: ${resta}`); // Salida: Resta: 2
+   </code></pre>
+
+   <h2>Palabra Clave Global</h2>
+   <p>En Node.js, la palabra clave <code>global</code> se usa para definir variables que están disponibles en todo el entorno de ejecución, similar a <code>window</code> en el navegador.</p>
+   <h3>Ejemplo de Uso de <code>global</code></h3>
+   <pre><code>
+   // archivo: app.js
+   global.miVariableGlobal = 'Hola, mundo';
+
+   function mostrarMensaje() {
+     console.log(global.miVariableGlobal);
+   }
+
+   mostrarMensaje(); // Salida: Hola, mundo
+   </code></pre>
+
+   <h2>Resumen</h2>
+   <ul>
+       <li><strong>CommonJS:</strong> Sistema de módulos predeterminado en Node.js usando <code>require</code> y <code>module.exports</code>.</li>
+       <li><strong>ESM (ECMAScript Modules):</strong> Sistema de módulos moderno usando <code>import</code> y <code>export</code>.</li>
+       <li><strong>Módulos Personalizados:</strong> Puedes crear módulos personalizados para encapsular y reutilizar el código.</li>
+       <li><strong>Palabra Clave Global:</strong> <code>global</code> se usa para definir variables globales en Node.js.</li>
+   </ul>
+   <h1>npm, npx y Creación de Paquetes</h1>
+
+   <h2>npm</h2>
+   <p><code>npm</code> (Node Package Manager) es el gestor de paquetes para Node.js. Permite instalar, compartir y gestionar dependencias de proyectos.</p>
+   <h3>Comandos Básicos de npm</h3>
+   <h4>Inicializar un Proyecto</h4>
+   <pre><code>
+npm init
+   </code></pre>
+   <p>Este comando crea un archivo <code>package.json</code> que almacena la información del proyecto y sus dependencias.</p>
+
+   <h4>Instalar Paquetes</h4>
+   <pre><code>
+npm install nombre-del-paquete
+   </code></pre>
+   <p>Este comando instala un paquete y lo agrega a las dependencias del proyecto en <code>package.json</code>.</p>
+
+   <h4>Instalar Paquetes de Desarrollo</h4>
+   <pre><code>
+npm install nombre-del-paquete --save-dev
+   </code></pre>
+   <p>Este comando instala un paquete como una dependencia de desarrollo.</p>
+
+   <h2>npx</h2>
+   <p><code>npx</code> es una herramienta incluida con npm que permite ejecutar paquetes de Node.js sin necesidad de instalarlos globalmente. Es útil para ejecutar comandos de paquetes que solo se necesitan temporalmente.</p>
+   <h3>Ejemplos de uso de npx</h3>
+   <h4>Ejecutar un Paquete Temporalmente</h4>
+   <pre><code>
+npx create-react-app my-app
+   </code></pre>
+   <p>Este comando ejecuta el paquete <code>create-react-app</code> para crear una nueva aplicación React sin necesidad de instalarlo globalmente.</p>
+
+   <h4>Ejecutar un Script de npm</h4>
+   <pre><code>
+npx mocha tests/
+   </code></pre>
+   <p>Este comando ejecuta el paquete <code>mocha</code> para correr pruebas en la carpeta <code>tests</code>.</p>
+
+   <h2>Crear Paquetes Públicos y Privados</h2>
+   <h3>Crear un Paquete Público</h3>
+   <h4>Inicializar un Proyecto</h4>
+   <pre><code>
+npm init
+   </code></pre>
+   <p>Sigue las instrucciones para crear un archivo <code>package.json</code>.</p>
+
+   <h4>Crear el Código del Paquete</h4>
+   <pre><code>
+// archivo: index.js
+function saludar(nombre) {
+ return `Hola, ${nombre}!`;
+}
+
+module.exports = saludar;
+   </code></pre>
+
+   <h4>Publicar el Paquete</h4>
+   <pre><code>
+npm publish
+   </code></pre>
+   <p>Este comando publica el paquete en el registro de npm.</p>
+
+   <h3>Crear un Paquete Privado</h3>
+   <h4>Inicializar un Proyecto</h4>
+   <pre><code>
+npm init
+   </code></pre>
+
+   <h4>Crear el Código del Paquete</h4>
+   <pre><code>
+// archivo: index.js
+function saludar(nombre) {
+ return `Hola, ${nombre}!`;
+}
+
+module.exports = saludar;
+   </code></pre>
+
+   <h4>Configurar el Paquete como Privado</h4>
+   <pre><code>
+{
+ "name": "mi-paquete-privado",
+ "version": "1.0.0",
+ "main": "index.js",
+ "private": true,
+ "dependencies": {}
+}
+   </code></pre>
+
+   <h2>Resumen</h2>
+   <ul>
+       <li><strong>npm:</strong> Gestor de paquetes para Node.js que permite instalar, compartir y gestionar dependencias.</li>
+       <li><strong>npx:</strong> Herramienta para ejecutar paquetes de Node.js sin necesidad de instalarlos globalmente.</li>
+       <li><strong>Paquetes Públicos:</strong> Paquetes que se pueden publicar en el registro de npm y están disponibles para todos.</li>
+       <li><strong>Paquetes Privados:</strong> Paquetes que se pueden configurar como privados y no se publican en el registro de npm.</li>
+   </ul>
+   <h1>Gestión de Paquetes con npm</h1>
+
+   <h2>Instalación Global</h2>
+   <p>La instalación global de paquetes hace que estos paquetes estén disponibles en cualquier lugar del sistema. Esto es útil para herramientas de línea de comandos que necesitas usar en varios proyectos.</p>
+   <h3>Ejemplo de Instalación Global</h3>
+   <pre><code>
+npm install -g nombre-del-paquete
+   </code></pre>
+   <p>Por ejemplo, para instalar el generador de aplicaciones de React:</p>
+   <pre><code>
+npm install -g create-react-app
+   </code></pre>
+   <p>Ahora puedes usar <code>create-react-app</code> desde cualquier lugar en tu sistema:</p>
+   <pre><code>
+create-react-app my-app
+   </code></pre>
+
+   <h2>Instalación Local</h2>
+   <p>La instalación local de paquetes instala los paquetes en el directorio <code>node_modules</code> de tu proyecto y los hace disponibles solo dentro de ese proyecto.</p>
+   <h3>Ejemplo de Instalación Local</h3>
+   <pre><code>
+npm install nombre-del-paquete
+   </code></pre>
+   <p>Por ejemplo, para instalar lodash en un proyecto:</p>
+   <pre><code>
+npm install lodash
+   </code></pre>
+
+   <h2>Actualización de Paquetes</h2>
+   <p>Puedes actualizar paquetes locales y globales a sus últimas versiones.</p>
+   <h3>Ejemplo de Actualización de Paquetes Locales</h3>
+   <pre><code>
+npm update nombre-del-paquete
+   </code></pre>
+   <p>Para actualizar todos los paquetes locales:</p>
+   <pre><code>
+npm update
+   </code></pre>
+
+   <h3>Ejemplo de Actualización de Paquetes Globales</h3>
+   <pre><code>
+npm update -g nombre-del-paquete
+   </code></pre>
+   <p>Para actualizar todos los paquetes globales:</p>
+   <pre><code>
+npm update -g
+   </code></pre>
+
+   <h2>Uso de Paquetes Instalados</h2>
+   <p>Después de instalar un paquete localmente, puedes requerirlo en tu código y usarlo.</p>
+   <h3>Ejemplo de Uso de Paquete Instalado</h3>
+   <pre><code>
+// archivo: app.js
+const lodash = require('lodash');
+
+const array = [1, 2, 3, 4, 5];
+const shuffledArray = lodash.shuffle(array);
+
+console.log(shuffledArray);
+   </code></pre>
+
+   <h2>Ejecución de Scripts</h2>
+   <p>Puedes definir y ejecutar scripts personalizados en el archivo <code>package.json</code>.</p>
+   <h3>Ejemplo de Scripts en <code>package.json</code></h3>
+   <pre><code>
+{
+ "name": "mi-proyecto",
+ "version": "1.0.0",
+ "scripts": {
+   "start": "node app.js",
+   "test": "echo \"Error: no test specified\" && exit 1"
+ },
+ "dependencies": {
+   "lodash": "^4.17.21"
+ }
+}
+   </code></pre>
+   <h3>Ejemplo de Ejecución de Scripts</h3>
+   <p>Para ejecutar el script <code>start</code> definido en <code>package.json</code>:</p>
+   <pre><code>
+npm run start
+   </code></pre>
+
+   <h2>npm Workspaces</h2>
+   <p>npm Workspaces permite gestionar múltiples paquetes dentro de un mismo repositorio. Es útil para proyectos monorepo.</p>
+   <h3>Configuración de npm Workspaces</h3>
+   <h4>Crear un Proyecto con Workspaces</h4>
+   <pre><code>
+mkdir mi-monorepo
+cd mi-monorepo
+npm init -y
+   </code></pre>
+
+   <h4>Configurar <code>package.json</code> para Workspaces</h4>
+   <pre><code>
+{
+ "name": "mi-monorepo",
+ "version": "1.0.0",
+ "private": true,
+ "workspaces": [
+   "packages/*"
+ ]
+}
+   </code></pre>
+
+   <h4>Crear Paquetes dentro del Workspace</h4>
+   <pre><code>
+mkdir -p packages/paquete-a
+cd packages/paquete-a
+npm init -y
+   </code></pre>
+
+   <h4>Instalar Dependencias en el Workspace</h4>
+   <pre><code>
+npm install
+   </code></pre>
+
+   <h2>Resumen</h2>
+   <ul>
+       <li><strong>Instalación Global:</strong> Instala paquetes disponibles en todo el sistema usando <code>npm install -g</code>.</li>
+       <li><strong>Instalación Local:</strong> Instala paquetes en el directorio del proyecto usando <code>npm install</code>.</li>
+       <li><strong>Actualización de Paquetes:</strong> Actualiza paquetes locales y globales usando <code>npm update</code>.</li>
+       <li><strong>Uso de Paquetes Instalados:</strong> Requiere e usa paquetes en tu código.</li>
+       <li><strong>Ejecución de Scripts:</strong> Define y ejecuta scripts personalizados en <code>package.json</code>.</li>
+       <li><strong>npm Workspaces:</strong> Gestiona múltiples paquetes dentro de un repositorio monorepo.</li>
+   </ul>
+   <h1>Manejo de Errores en Node.js, Call Stack, Stack Trace y Debugger</h1>
+
+    <h2>Manejo de Errores en Node.js</h2>
+    <p>El manejo de errores en Node.js se puede hacer utilizando bloques <code>try...catch</code>, eventos de error, y promesas con <code>catch</code>.</p>
+    <h3>Ejemplo de Manejo de Errores con <code>try...catch</code></h3>
+    <pre><code>
+// archivo: app.js
+try {
+  // Intentar ejecutar código que puede fallar
+  let resultado = JSON.parse('{"clave": "valor"}');
+  console.log(resultado);
+} catch (error) {
+  // Manejar el error si ocurre
+  console.error('Error al parsear JSON:', error.message);
+}
+    </code></pre>
+
+    <h3>Ejemplo de Manejo de Errores con Eventos</h3>
+    <pre><code>
+const EventEmitter = require('events');
+const emisor = new EventEmitter();
+
+// Escuchar el evento 'error'
+emisor.on('error', (err) => {
+  console.error('Error capturado:', err.message);
+});
+
+// Emitir un evento 'error'
+emisor.emit('error', new Error('Algo salió mal'));
+    </code></pre>
+
+    <h3>Ejemplo de Manejo de Errores con Promesas</h3>
+    <pre><code>
+// Promesa que rechaza con un error
+let promesa = new Promise((resolve, reject) => {
+  reject(new Error('Promesa rechazada'));
+});
+
+// Manejar el error con catch
+promesa.catch((err) => {
+  console.error('Error en la promesa:', err.message);
+});
+    </code></pre>
+
+    <h2>Call Stack y Stack Trace</h2>
+    <p>La pila de llamadas (call stack) es una estructura de datos que registra las funciones que se están ejecutando. Un seguimiento de la pila (stack trace) muestra el estado de la pila de llamadas en el momento de un error, proporcionando información útil para depurar.</p>
+    <h3>Ejemplo de Call Stack y Stack Trace</h3>
+    <pre><code>
+function funcionA() {
+  funcionB();
+}
+
+function funcionB() {
+  funcionC();
+}
+
+function funcionC() {
+  // Lanzar un error para generar un stack trace
+  throw new Error('Error intencional para mostrar stack trace');
+}
+
+try {
+  funcionA();
+} catch (error) {
+  console.error(error.stack); // Mostrar el stack trace del error
+}
+    </code></pre>
+
+    <h2>Usar Debugger en Node.js</h2>
+    <p>El depurador (debugger) en Node.js permite detener la ejecución del código en ciertos puntos y examinar el estado del programa.</p>
+    <h3>Usar el Depurador en el Código</h3>
+    <h4>Añadir una Declaración <code>debugger</code></h4>
+    <pre><code>
+function sumar(a, b) {
+  debugger; // Punto de interrupción
+  return a + b;
+}
+
+console.log(sumar(2, 3));
+    </code></pre>
+
+    <h4>Ejecutar el Código con el Depurador</h4>
+    <pre><code>
+node inspect app.js
+    </code></pre>
+
+    <h3>Usar el Depurador en el Código con VS Code</h3>
+    <h4>Añadir una Declaración <code>debugger</code></h4>
+    <pre><code>
+function sumar(a, b) {
+  debugger; // Punto de interrupción
+  return a + b;
+}
+
+console.log(sumar(2, 3));
+    </code></pre>
+
+    <h4>Configurar el Depurador en VS Code</h4>
+    <pre><code>
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/app.js"
+    }
+  ]
+}
+    </code></pre>
+
+    <h4>Ejecutar el Depurador en VS Code</h4>
+    <p>Abre el panel de depuración en VS Code. Selecciona la configuración "Launch Program". Haz clic en el botón de inicio para iniciar el depurador.</p>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Manejo de Errores en Node.js:</strong> Utiliza bloques <code>try...catch</code>, eventos de error, y promesas con <code>catch</code> para manejar errores.</li>
+        <li><strong>Call Stack:</strong> Estructura de datos que registra las funciones en ejecución.</li>
+        <li><strong>Stack Trace:</strong> Muestra el estado de la pila de llamadas en el momento de un error.</li>
+        <li><strong>Debugger:</strong> Utiliza declaraciones <code>debugger</code> y herramientas como <code>node inspect</code> o VS Code para detener y examinar la ejecución del código.</li>
+    </ul>
+    <h1>Manejo de Errores en Node.js</h1>
+
+    <h2>Uncaught Exceptions (Excepciones No Capturadas)</h2>
+    <p>Las excepciones no capturadas son errores que no han sido manejados por ningún bloque <code>try...catch</code> o manejador de errores. Node.js proporciona una forma de manejar estas excepciones utilizando el evento <code>uncaughtException</code>.</p>
+    <h3>Ejemplo de Manejo de Excepciones No Capturadas</h3>
+    <pre><code>
+process.on('uncaughtException', (err) => {
+  console.error('Excepción no capturada:', err.message);
+  // Realizar limpieza si es necesario
+  process.exit(1); // Salir del proceso
+});
+
+throw new Error('Error no capturado');
+    </code></pre>
+
+    <h2>Handling Async Errors (Manejo de Errores Asíncronos)</h2>
+    <p>Manejar errores en operaciones asíncronas puede ser más complicado que en operaciones síncronas. En Node.js, puedes manejar errores asíncronos utilizando <code>try...catch</code> con <code>async/await</code> o manejadores de errores en promesas.</p>
+    <h3>Ejemplo de Manejo de Errores Asíncronos con <code>async/await</code></h3>
+    <pre><code>
+async function ejecutar() {
+  try {
+    await promesaFallida();
+  } catch (error) {
+    console.error('Error asíncrono capturado:', error.message);
+  }
+}
+
+async function promesaFallida() {
+  throw new Error('Error en la promesa');
+}
+
+ejecutar();
+    </code></pre>
+
+    <h3>Ejemplo de Manejo de Errores Asíncronos con Promesas</h3>
+    <pre><code>
+function promesaFallida() {
+  return new Promise((resolve, reject) => {
+    reject(new Error('Error en la promesa'));
+  });
+}
+
+promesaFallida().catch((error) => {
+  console.error('Error en la promesa capturado:', error.message);
+});
+    </code></pre>
+
+    <h2>Types of Errors (Tipos de Errores)</h2>
+
+    <h3>JavaScript Errors (Errores de JavaScript)</h3>
+    <p>Estos errores son lanzados por el motor de JavaScript y pueden incluir errores de sintaxis, referencias no definidas, etc.</p>
+    <pre><code>
+try {
+  nonExistentFunction();
+} catch (error) {
+  console.error('Error de JavaScript capturado:', error.message);
+}
+    </code></pre>
+
+    <h3>System Errors (Errores del Sistema)</h3>
+    <p>Estos errores son lanzados por Node.js cuando una operación del sistema falla, como fallos de red, fallos de archivo, etc.</p>
+    <pre><code>
+const fs = require('fs');
+
+fs.readFile('/path/no/existe', (err, data) => {
+  if (err) {
+    console.error('Error del sistema capturado:', err.message);
+  } else {
+    console.log(data);
+  }
+});
+    </code></pre>
+
+    <h3>User-Specified Errors (Errores Especificados por el Usuario)</h3>
+    <p>Estos son errores definidos por el desarrollador para manejar condiciones específicas en la lógica de la aplicación.</p>
+    <pre><code>
+function verificarEntrada(entrada) {
+  if (entrada < 0) {
+    throw new Error('La entrada no puede ser negativa');
+  }
+  return true;
+}
+
+try {
+  verificarEntrada(-1);
+} catch (error) {
+  console.error('Error especificado por el usuario capturado:', error.message);
+}
+    </code></pre>
+
+    <h3>Assertion Errors (Errores de Aserción)</h3>
+    <p>Estos errores son lanzados cuando una condición de aserción falla. Node.js incluye el módulo <code>assert</code> para este propósito.</p>
+    <pre><code>
+const assert = require('assert');
+
+try {
+  assert.strictEqual(1, 2, 'Los valores no son iguales');
+} catch (error) {
+  console.error('Error de aserción capturado:', error.message);
+}
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Uncaught Exceptions:</strong> Manejar excepciones no capturadas usando <code>process.on('uncaughtException', ...)</code>.</li>
+        <li><strong>Handling Async Errors:</strong> Manejar errores asíncronos con <code>async/await</code> y manejadores de errores en promesas.</li>
+        <li><strong>JavaScript Errors:</strong> Errores lanzados por el motor de JavaScript, como errores de sintaxis.</li>
+        <li><strong>System Errors:</strong> Errores del sistema lanzados por Node.js, como fallos de red o de archivos.</li>
+        <li><strong>User-Specified Errors:</strong> Errores definidos por el desarrollador para manejar condiciones específicas.</li>
+        <li><strong>Assertion Errors:</strong> Errores lanzados cuando una condición de aserción falla, utilizando el módulo <code>assert</code>.</li>
+    </ul>
+    <h1>Programación Asíncrona en Node.js</h1>
+
+    <h2>Event Loop</h2>
+    <p>El event loop es un componente fundamental de Node.js que permite la ejecución de código asíncrono. Gestiona las operaciones de E/S no bloqueantes, en cola las callbacks y promesas, y ejecuta tareas asincrónicas.</p>
+
+    <h2>Callbacks</h2>
+    <p>Los callbacks son funciones que se pasan como argumentos a otras funciones y se ejecutan después de que se completa una operación asíncrona.</p>
+    <h3>Ejemplo de Callbacks</h3>
+    <pre><code>
+const fs = require('fs');
+
+// Leer un archivo de manera asíncrona
+fs.readFile('archivo.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error('Error leyendo el archivo:', err);
+    return;
+  }
+  console.log('Contenido del archivo:', data);
+});
+    </code></pre>
+
+    <h2>Promesas</h2>
+    <p>Las promesas son objetos que representan la eventual finalización (o falla) de una operación asíncrona y su valor resultante.</p>
+    <h3>Ejemplo de Promesas</h3>
+    <pre><code>
+const fs = require('fs').promises;
+
+// Leer un archivo usando promesas
+fs.readFile('archivo.txt', 'utf8')
+  .then((data) => {
+    console.log('Contenido del archivo:', data);
+  })
+  .catch((err) => {
+    console.error('Error leyendo el archivo:', err);
+  });
+    </code></pre>
+
+    <h2>Async/Await</h2>
+    <p><code>async</code> y <code>await</code> son sintaxis más recientes en JavaScript que simplifican el manejo de promesas, permitiendo escribir código asíncrono de manera más legible.</p>
+    <h3>Ejemplo de Async/Await</h3>
+    <pre><code>
+const fs = require('fs').promises;
+
+async function leerArchivo() {
+  try {
+    const data = await fs.readFile('archivo.txt', 'utf8');
+    console.log('Contenido del archivo:', data);
+  } catch (err) {
+    console.error('Error leyendo el archivo:', err);
+  }
+}
+
+leerArchivo();
+    </code></pre>
+
+    <h2>Timers</h2>
+    <p>Node.js proporciona funciones como <code>setTimeout</code> y <code>setInterval</code> para ejecutar código después de un cierto período de tiempo.</p>
+    <h3>Ejemplo de Timers</h3>
+    <pre><code>
+// Ejecutar una función después de 2 segundos
+setTimeout(() => {
+  console.log('Ejecutado después de 2 segundos');
+}, 2000);
+
+// Ejecutar una función cada 3 segundos
+setInterval(() => {
+  console.log('Ejecutado cada 3 segundos');
+}, 3000);
+    </code></pre>
+
+    <h2>Manejo de Errores Asíncronos</h2>
+    <p>El manejo de errores es crucial en la programación asíncrona. Con callbacks, errores se manejan a menudo pasando el error como primer argumento de la función callback. Con promesas y async/await, se usan <code>catch</code> y <code>try...catch</code> respectivamente.</p>
+    <h3>Ejemplo de Manejo de Errores con Callbacks</h3>
+    <pre><code>
+const fs = require('fs');
+
+fs.readFile('archivo-no-existe.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error('Error leyendo el archivo:', err);
+    return;
+  }
+  console.log('Contenido del archivo:', data);
+});
+    </code></pre>
+
+    <h3>Ejemplo de Manejo de Errores con Promesas</h3>
+    <pre><code>
+const fs = require('fs').promises;
+
+fs.readFile('archivo-no-existe.txt', 'utf8')
+  .then((data) => {
+    console.log('Contenido del archivo:', data);
+  })
+  .catch((err) => {
+    console.error('Error leyendo el archivo:', err);
+  });
+    </code></pre>
+
+    <h3>Ejemplo de Manejo de Errores con Async/Await</h3>
+    <pre><code>
+const fs = require('fs').promises;
+
+async function leerArchivo() {
+  try {
+    const data = await fs.readFile('archivo-no-existe.txt', 'utf8');
+    console.log('Contenido del archivo:', data);
+  } catch (err) {
+    console.error('Error leyendo el archivo:', err);
+  }
+}
+
+leerArchivo();
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Event Loop:</strong> Componente fundamental de Node.js que gestiona la ejecución de código asíncrono.</li>
+        <li><strong>Callbacks:</strong> Funciones que se pasan como argumentos y se ejecutan después de operaciones asíncronas.</li>
+        <li><strong>Promesas:</strong> Objetos que representan la eventual finalización o falla de una operación asíncrona.</li>
+        <li><strong>Async/Await:</strong> Sintaxis que simplifica el manejo de promesas, permitiendo escribir código asíncrono de manera más legible.</li>
+        <li><strong>Timers:</strong> <code>setTimeout</code> y <code>setInterval</code> para ejecutar código después de un cierto período de tiempo.</li>
+        <li><strong>Manejo de Errores:</strong> Es crucial manejar errores en la programación asíncrona usando <code>catch</code>, <code>try...catch</code>, o pasando errores a través de callbacks.</li>
+    </ul>
+    <h1>Programación Asíncrona en Node.js</h1>
+
+    <h2>Event Loop</h2>
+    <p>El Event Loop es el mecanismo que permite a Node.js realizar operaciones no bloqueantes, a pesar de que JavaScript es monohilo. Maneja la ejecución de múltiples operaciones de E/S, encolando callbacks y promesas, y ejecutando tareas asincrónicas.</p>
+    <h3>Etapas del Event Loop</h3>
+    <ul>
+        <li><strong>Timers:</strong> Ejecuta callbacks programados por <code>setTimeout</code> y <code>setInterval</code>.</li>
+        <li><strong>Pending Callbacks:</strong> Ejecuta callbacks de operaciones de E/S que se completaron en la iteración anterior del loop.</li>
+        <li><strong>Idle, Prepare:</strong> Solo para uso interno.</li>
+        <li><strong>Poll:</strong> Recupera nuevos eventos de E/S; ejecuta callbacks de operaciones de E/S (excepto los establecidos por <code>timers</code> y <code>setImmediate</code>).</li>
+        <li><strong>Check:</strong> Ejecuta callbacks de <code>setImmediate</code>.</li>
+        <li><strong>Close Callbacks:</strong> Ejecuta callbacks de eventos de cierre, como <code>socket.on('close', ...)</code>.</li>
+    </ul>
+
+    <h2><code>setImmediate</code></h2>
+    <p><code>setImmediate</code> se utiliza para ejecutar código asíncrono en la fase de "check" del Event Loop. Se ejecuta después de que el ciclo de eventos actual se haya completado, pero antes de cualquier I/O o temporizador.</p>
+    <h3>Ejemplo de <code>setImmediate</code></h3>
+    <pre><code>
+console.log('Antes de setImmediate');
+
+setImmediate(() => {
+  console.log('Dentro de setImmediate');
+});
+
+console.log('Después de setImmediate');
+    </code></pre>
+
+    <h2><code>process.nextTick</code></h2>
+    <p><code>process.nextTick</code> se utiliza para ejecutar código asíncrono inmediatamente después de la fase actual del Event Loop, antes de que el ciclo continúe.</p>
+    <h3>Ejemplo de <code>process.nextTick</code></h3>
+    <pre><code>
+console.log('Antes de process.nextTick');
+
+process.nextTick(() => {
+  console.log('Dentro de process.nextTick');
+});
+
+console.log('Después de process.nextTick');
+    </code></pre>
+
+    <h2>EventEmitter</h2>
+    <p>El módulo <code>events</code> de Node.js proporciona una clase llamada <code>EventEmitter</code> que se puede usar para gestionar eventos. Puedes emitir eventos y registrar listeners para manejar esos eventos.</p>
+    <h3>Ejemplo de <code>EventEmitter</code></h3>
+    <pre><code>
+const EventEmitter = require('events');
+const emisor = new EventEmitter();
+
+// Registrar un listener para el evento 'saludo'
+emisor.on('saludo', (nombre) => {
+  console.log(`¡Hola, ${nombre}!`);
+});
+
+// Emitir el evento 'saludo'
+emisor.emit('saludo', 'Mundo');
+    </code></pre>
+
+    <h2>Ejemplo Completo con <code>setImmediate</code>, <code>process.nextTick</code>, y <code>EventEmitter</code></h2>
+    <pre><code>
+const EventEmitter = require('events');
+const emisor = new EventEmitter();
+
+console.log('Inicio del programa');
+
+// Registrar listeners
+emisor.on('evento', () => {
+  console.log('Evento emitido');
+});
+
+setImmediate(() => {
+  console.log('Dentro de setImmediate');
+});
+
+process.nextTick(() => {
+  console.log('Dentro de process.nextTick');
+});
+
+// Emitir evento
+emisor.emit('evento');
+
+console.log('Fin del programa');
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Event Loop:</strong> Maneja la ejecución de operaciones no bloqueantes en Node.js.</li>
+        <li><strong>setImmediate:</strong> Ejecuta callbacks en la fase de "check" del Event Loop.</li>
+        <li><strong>process.nextTick:</strong> Ejecuta callbacks inmediatamente después de la fase actual del Event Loop.</li>
+        <li><strong>EventEmitter:</strong> Proporciona una forma de gestionar eventos personalizados en Node.js.</li>
+    </ul>
+
+    
+    
+
+
+
+
+</body>
+</html>
