@@ -771,9 +771,988 @@ console.log('Fin del programa');
         <li><strong>process.nextTick:</strong> Ejecuta callbacks inmediatamente después de la fase actual del Event Loop.</li>
         <li><strong>EventEmitter:</strong> Proporciona una forma de gestionar eventos personalizados en Node.js.</li>
     </ul>
+    <h1>Trabajar con Archivos en Node.js</h1>
 
+    <h2>Importar el Módulo <code>fs</code></h2>
+    <pre><code>
+const fs = require('fs');
+    </code></pre>
+
+    <h2>Leer Archivos</h2>
+    <h3>Leer Archivos de Manera Asíncrona</h3>
+    <pre><code>
+const fs = require('fs');
+
+fs.readFile('archivo.txt', 'utf8', (err, data) => {
+  if (err) {
+    console.error('Error leyendo el archivo:', err);
+    return;
+  }
+  console.log('Contenido del archivo:', data);
+});
+    </code></pre>
+
+    <h3>Leer Archivos de Manera Síncrona</h3>
+    <pre><code>
+const fs = require('fs');
+
+try {
+  const data = fs.readFileSync('archivo.txt', 'utf8');
+  console.log('Contenido del archivo:', data);
+} catch (err) {
+  console.error('Error leyendo el archivo:', err);
+}
+    </code></pre>
+
+    <h2>Escribir Archivos</h2>
+    <h3>Escribir Archivos de Manera Asíncrona</h3>
+    <pre><code>
+const fs = require('fs');
+
+const contenido = 'Hola, mundo!';
+fs.writeFile('archivo.txt', contenido, (err) => {
+  if (err) {
+    console.error('Error escribiendo el archivo:', err);
+    return;
+  }
+  console.log('Archivo escrito con éxito');
+});
+    </code></pre>
+
+    <h3>Escribir Archivos de Manera Síncrona</h3>
+    <pre><code>
+const fs = require('fs');
+
+const contenido = 'Hola, mundo!';
+try {
+  fs.writeFileSync('archivo.txt', contenido);
+  console.log('Archivo escrito con éxito');
+} catch (err) {
+  console.error('Error escribiendo el archivo:', err);
+}
+    </code></pre>
+
+    <h2>Otras Operaciones con Archivos</h2>
+    <h3>Añadir Contenido a un Archivo</h3>
+    <pre><code>
+const fs = require('fs');
+
+const contenido = '\nAñadiendo más contenido';
+fs.appendFile('archivo.txt', contenido, (err) => {
+  if (err) {
+    console.error('Error añadiendo al archivo:', err);
+    return;
+  }
+  console.log('Contenido añadido con éxito');
+});
+    </code></pre>
+
+    <h3>Renombrar un Archivo</h3>
+    <pre><code>
+const fs = require('fs');
+
+fs.rename('archivo.txt', 'nuevo-archivo.txt', (err) => {
+  if (err) {
+    console.error('Error renombrando el archivo:', err);
+    return;
+  }
+  console.log('Archivo renombrado con éxito');
+});
+    </code></pre>
+
+    <h3>Eliminar un Archivo</h3>
+    <pre><code>
+const fs = require('fs');
+
+fs.unlink('archivo.txt', (err) => {
+  if (err) {
+    console.error('Error eliminando el archivo:', err);
+    return;
+  }
+  console.log('Archivo eliminado con éxito');
+});
+    </code></pre>
+
+    <h2>Ejemplo Completo</h2>
+    <pre><code>
+const fs = require('fs');
+
+// Escribir un archivo
+fs.writeFile('archivo.txt', 'Hola, mundo!', (err) => {
+  if (err) {
+    console.error('Error escribiendo el archivo:', err);
+    return;
+  }
+  console.log('Archivo escrito con éxito');
+
+  // Leer el archivo
+  fs.readFile('archivo.txt', 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error leyendo el archivo:', err);
+      return;
+    }
+    console.log('Contenido del archivo:', data);
+
+    // Añadir contenido al archivo
+    fs.appendFile('archivo.txt', '\nAñadiendo más contenido', (err) => {
+      if (err) {
+        console.error('Error añadiendo al archivo:', err);
+        return;
+      }
+      console.log('Contenido añadido con éxito');
+
+      // Renombrar el archivo
+      fs.rename('archivo.txt', 'nuevo-archivo.txt', (err) => {
+        if (err) {
+          console.error('Error renombrando el archivo:', err);
+          return;
+        }
+        console.log('Archivo renombrado con éxito');
+
+        // Eliminar el archivo
+        fs.unlink('nuevo-archivo.txt', (err) => {
+          if (err) {
+            console.error('Error eliminando el archivo:', err);
+            return;
+          }
+          console.log('Archivo eliminado con éxito');
+        });
+      });
+    });
+  });
+});
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Leer Archivos:</strong> <code>fs.readFile</code> (asíncrono), <code>fs.readFileSync</code> (síncrono).</li>
+        <li><strong>Escribir Archivos:</strong> <code>fs.writeFile</code> (asíncrono), <code>fs.writeFileSync</code> (síncrono).</li>
+        <li><strong>Añadir Contenido:</strong> <code>fs.appendFile</code> (asíncrono).</li>
+        <li><strong>Renombrar Archivos:</strong> <code>fs.rename</code> (asíncrono).</li>
+        <li><strong>Eliminar Archivos:</strong> <code>fs.unlink</code> (asíncrono).</li>
+    </ul>
+    <h1>Trabajar con Rutas y Archivos en Node.js</h1>
+
+    <h2><code>__dirname</code> y <code>__filename</code></h2>
+    <h3><code>__dirname</code></h3>
+    <p><code>__dirname</code> es una variable global en Node.js que contiene el directorio absoluto del archivo que se está ejecutando.</p>
+    <pre><code>
+// archivo: app.js
+console.log(__dirname); // Imprime el directorio del archivo actual
+    </code></pre>
+
+    <h3><code>__filename</code></h3>
+    <p><code>__filename</code> es una variable global en Node.js que contiene el nombre del archivo con su ruta absoluta.</p>
+    <pre><code>
+// archivo: app.js
+console.log(__filename); // Imprime la ruta absoluta del archivo actual
+    </code></pre>
+
+    <h2><code>process.cwd()</code></h2>
+    <p><code>process.cwd()</code> devuelve el directorio de trabajo actual del proceso Node.js. A diferencia de <code>__dirname</code>, que es específico del archivo, <code>process.cwd()</code> es específico del proceso.</p>
+    <pre><code>
+// archivo: app.js
+console.log(process.cwd()); // Imprime el directorio de trabajo actual del proceso
+    </code></pre>
+
+    <h2>Módulo <code>path</code></h2>
+    <p>El módulo <code>path</code> proporciona utilidades para trabajar con rutas de archivos y directorios. Es especialmente útil para construir y manipular rutas de manera compatible entre diferentes sistemas operativos.</p>
+
+    <h3>Importar el Módulo <code>path</code></h3>
+    <pre><code>
+const path = require('path');
+    </code></pre>
+
+    <h3>Funciones Comunes del Módulo <code>path</code></h3>
+
+    <h4><code>path.join()</code></h4>
+    <p>Combina todos los argumentos en una única ruta. Es útil para construir rutas de archivos.</p>
+    <pre><code>
+const path = require('path');
+
+const ruta = path.join(__dirname, 'carpeta', 'archivo.txt');
+console.log(ruta); // Combina __dirname, 'carpeta', y 'archivo.txt' en una única ruta
+    </code></pre>
+
+    <h4><code>path.resolve()</code></h4>
+    <p>Resuelve una secuencia de segmentos de ruta en una ruta absoluta.</p>
+    <pre><code>
+const path = require('path');
+
+const ruta = path.resolve('carpeta', 'archivo.txt');
+console.log(ruta); // Resuelve 'carpeta/archivo.txt' en una ruta absoluta
+    </code></pre>
+
+    <h4><code>path.basename()</code></h4>
+    <p>Devuelve la última parte de una ruta. Es útil para obtener el nombre del archivo con o sin extensión.</p>
+    <pre><code>
+const path = require('path');
+
+const ruta = '/ruta/al/archivo.txt';
+console.log(path.basename(ruta)); // Imprime 'archivo.txt'
+console.log(path.basename(ruta, '.txt')); // Imprime 'archivo'
+    </code></pre>
+
+    <h4><code>path.dirname()</code></h4>
+    <p>Devuelve el directorio de una ruta.</p>
+    <pre><code>
+const path = require('path');
+
+const ruta = '/ruta/al/archivo.txt';
+console.log(path.dirname(ruta)); // Imprime '/ruta/al'
+    </code></pre>
+
+    <h4><code>path.extname()</code></h4>
+    <p>Devuelve la extensión del archivo de una ruta.</p>
+    <pre><code>
+const path = require('path');
+
+const ruta = '/ruta/al/archivo.txt';
+console.log(path.extname(ruta)); // Imprime '.txt'
+    </code></pre>
+
+    <h2>Ejemplo Completo</h2>
+    <pre><code>
+const path = require('path');
+
+console.log('__dirname:', __dirname); // Directorio del archivo actual
+console.log('__filename:', __filename); // Ruta completa del archivo actual
+console.log('process.cwd():', process.cwd()); // Directorio de trabajo actual del proceso
+
+const rutaArchivo = path.join(__dirname, 'carpeta', 'archivo.txt');
+console.log('path.join:', rutaArchivo); // Combina las rutas
+
+const rutaAbsoluta = path.resolve('carpeta', 'archivo.txt');
+console.log('path.resolve:', rutaAbsoluta); // Resuelve a una ruta absoluta
+
+const nombreArchivo = path.basename(rutaArchivo);
+console.log('path.basename:', nombreArchivo); // Nombre del archivo
+
+const nombreArchivoSinExt = path.basename(rutaArchivo, '.txt');
+console.log('path.basename sin ext:', nombreArchivoSinExt); // Nombre del archivo sin extensión
+
+const directorio = path.dirname(rutaArchivo);
+console.log('path.dirname:', directorio); // Directorio del archivo
+
+const extension = path.extname(rutaArchivo);
+console.log('path.extname:', extension); // Extensión del archivo
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong><code>__dirname</code>:</strong> Directorio absoluto del archivo que se está ejecutando.</li>
+        <li><strong><code>__filename</code>:</strong> Ruta absoluta del archivo que se está ejecutando.</li>
+        <li><strong><code>process.cwd()</code>:</strong> Directorio de trabajo actual del proceso Node.js.</li>
+        <li><strong>Módulo <code>path</code>:</strong> Proporciona utilidades para trabajar con rutas de archivos y directorios.
+            <ul>
+                <li><strong><code>path.join()</code>:</strong> Combina segmentos de ruta en una única ruta.</li>
+                <li><strong><code>path.resolve()</code>:</strong> Resuelve segmentos de ruta en una ruta absoluta.</li>
+                <li><strong><code>path.basename()</code>:</strong> Devuelve la última parte de una ruta (nombre del archivo).</li>
+                <li><strong><code>path.dirname()</code>:</strong> Devuelve el directorio de una ruta.</li>
+                <li><strong><code>path.extname()</code>:</strong> Devuelve la extensión del archivo de una ruta.</li>
+            </ul>
+        </li>
+    </ul>
+    <h1>Aplicaciones de Línea de Comandos en Node.js</h1>
+
+    <h2>Capturar Argumentos de la Línea de Comandos</h2>
+    <p>Los argumentos de la línea de comandos se pasan al script de Node.js y se pueden acceder a través de <code>process.argv</code>.</p>
+    <pre><code>
+// archivo: app.js
+const args = process.argv.slice(2); // Eliminar los dos primeros elementos (node y script path)
+console.log('Argumentos:', args);
+    </code></pre>
+
+    <p>Ejecuta el script:</p>
+    <pre><code>
+node app.js arg1 arg2 arg3
+    </code></pre>
+    <p>Salida:</p>
+    <pre><code>
+Argumentos: [ 'arg1', 'arg2', 'arg3' ]
+    </code></pre>
+
+    <h2>Leer Entrada del Usuario</h2>
+    <p>Node.js proporciona la interfaz <code>readline</code> para leer la entrada del usuario desde la línea de comandos.</p>
+    <pre><code>
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question('¿Cómo te llamas? ', (nombre) => {
+  console.log(`Hola, ${nombre}!`);
+  rl.close();
+});
+    </code></pre>
+
+    <h2>Mostrar Salida</h2>
+    <p>Para mostrar la salida al usuario, puedes usar <code>console.log</code> y otros métodos de <code>console</code>.</p>
+    <pre><code>
+console.log('Mensaje de información');
+console.error('Mensaje de error');
+    </code></pre>
+
+    <h2>Usar Bibliotecas Útiles</h2>
+    <h3>Commander</h3>
+    <p><code>commander</code> es una biblioteca popular para crear aplicaciones de línea de comandos. Facilita la definición de comandos y opciones.</p>
+    <h4>Instalación</h4>
+    <pre><code>
+npm install commander
+    </code></pre>
+    <h4>Ejemplo de Uso de Commander</h4>
+    <pre><code>
+const { Command } = require('commander');
+const program = new Command();
+
+program
+  .version('1.0.0')
+  .description('Una aplicación CLI simple')
+  .option('-n, --nombre <type>', 'tu nombre');
+
+program.parse(process.argv);
+
+const options = program.opts();
+if (options.nombre) {
+  console.log(`Hola, ${options.nombre}!`);
+} else {
+  console.log('Hola!');
+}
+    </code></pre>
+    <p>Ejecuta el script:</p>
+    <pre><code>
+node app.js --nombre Juan
+    </code></pre>
+    <p>Salida:</p>
+    <pre><code>
+Hola, Juan!
+    </code></pre>
+
+    <h3>Inquirer</h3>
+    <p><code>inquirer</code> es una biblioteca para crear interfaces de usuario interactivas en la línea de comandos. Es útil para realizar preguntas al usuario.</p>
+    <h4>Instalación</h4>
+    <pre><code>
+npm install inquirer
+    </code></pre>
+    <h4>Ejemplo de Uso de Inquirer</h4>
+    <pre><code>
+const inquirer = require('inquirer');
+
+inquirer
+  .prompt([
+    {
+      type: 'input',
+      name: 'nombre',
+      message: '¿Cómo te llamas?'
+    }
+  ])
+  .then((answers) => {
+    console.log(`Hola, ${answers.nombre}!`);
+  });
+    </code></pre>
+
+    <h2>Ejemplo Completo de una Aplicación CLI</h2>
+    <pre><code>
+const { Command } = require('commander');
+const inquirer = require('inquirer');
+const program = new Command();
+
+program
+  .version('1.0.0')
+  .description('Una aplicación CLI interactiva')
+  .option('-g, --greet', 'Saludar al usuario');
+
+program.parse(process.argv);
+
+const options = program.opts();
+
+if (options.greet) {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'nombre',
+        message: '¿Cómo te llamas?'
+      }
+    ])
+    .then((answers) => {
+      console.log(`Hola, ${answers.nombre}!`);
+    });
+} else {
+  console.log('Usa la opción -g para recibir un saludo.');
+}
+    </code></pre>
+
+    <p>Ejecuta el script:</p>
+    <pre><code>
+node app.js --greet
+    </code></pre>
+    <p>Salida:</p>
+    <pre><code>
+? ¿Cómo te llamas? Juan
+Hola, Juan!
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Capturar Argumentos:</strong> Utiliza <code>process.argv</code> para acceder a los argumentos de la línea de comandos.</li>
+        <li><strong>Leer Entrada del Usuario:</strong> Usa el módulo <code>readline</code> para leer la entrada del usuario.</li>
+        <li><strong>Mostrar Salida:</strong> Usa <code>console.log</code> y <code>console.error</code> para mostrar mensajes al usuario.</li>
+        <li><strong>Commander:</strong> Biblioteca para crear aplicaciones de línea de comandos con soporte para comandos y opciones.</li>
+        <li><strong>Inquirer:</strong> Biblioteca para crear interfaces de usuario interactivas en la línea de comandos.</li>
+    </ul>
+    <h1>Trabajar con APIs en Node.js</h1>
+
+    <h2>Usando <code>axios</code></h2>
+    <p><code>axios</code> es una biblioteca basada en promesas que facilita la realización de solicitudes HTTP.</p>
+    <h3>Instalación</h3>
+    <pre><code>
+npm install axios
+    </code></pre>
+
+    <h3>Ejemplos de Uso de <code>axios</code></h3>
+
+    <h4>Realizar una Solicitud GET</h4>
+    <pre><code>
+const axios = require('axios');
+
+// Realizar una solicitud GET
+axios.get('https://jsonplaceholder.typicode.com/posts/1')
+  .then(response => {
+    console.log('Datos:', response.data); // Mostrar los datos de la respuesta
+  })
+  .catch(error => {
+    console.error('Error:', error.message); // Manejar errores
+  });
+    </code></pre>
+
+    <h4>Realizar una Solicitud POST</h4>
+    <pre><code>
+const axios = require('axios');
+
+const nuevoPost = {
+  title: 'foo',
+  body: 'bar',
+  userId: 1
+};
+
+// Realizar una solicitud POST
+axios.post('https://jsonplaceholder.typicode.com/posts', nuevoPost)
+  .then(response => {
+    console.log('Post creado:', response.data); // Mostrar los datos del post creado
+  })
+  .catch(error => {
+    console.error('Error:', error.message); // Manejar errores
+  });
+    </code></pre>
+
+    <h4>Realizar una Solicitud PUT</h4>
+    <pre><code>
+const axios = require('axios');
+
+const actualizacionPost = {
+  title: 'foo actualizado',
+  body: 'bar actualizado',
+  userId: 1
+};
+
+// Realizar una solicitud PUT
+axios.put('https://jsonplaceholder.typicode.com/posts/1', actualizacionPost)
+  .then(response => {
+    console.log('Post actualizado:', response.data); // Mostrar los datos del post actualizado
+  })
+  .catch(error => {
+    console.error('Error:', error.message); // Manejar errores
+  });
+    </code></pre>
+
+    <h4>Realizar una Solicitud DELETE</h4>
+    <pre><code>
+const axios = require('axios');
+
+// Realizar una solicitud DELETE
+axios.delete('https://jsonplaceholder.typicode.com/posts/1')
+  .then(response => {
+    console.log('Post eliminado:', response.data); // Mostrar la respuesta
+  })
+  .catch(error => {
+    console.error('Error:', error.message); // Manejar errores
+  });
+    </code></pre>
+
+    <h2>Usando el Módulo Nativo <code>http</code></h2>
+    <p>Node.js también proporciona el módulo nativo <code>http</code> para realizar solicitudes HTTP.</p>
+
+    <h3>Ejemplos de Uso del Módulo <code>http</code></h3>
+
+    <h4>Realizar una Solicitud GET</h4>
+    <pre><code>
+const http = require('http');
+
+// Opciones para la solicitud
+const options = {
+  hostname: 'jsonplaceholder.typicode.com',
+  path: '/posts/1',
+  method: 'GET'
+};
+
+// Realizar la solicitud
+const req = http.request(options, (res) => {
+  let data = '';
+
+  // Recibir datos
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // Fin de la respuesta
+  res.on('end', () => {
+    console.log('Datos:', JSON.parse(data)); // Mostrar los datos de la respuesta
+  });
+});
+
+// Manejar errores
+req.on('error', (error) => {
+  console.error('Error:', error.message);
+});
+
+// Finalizar la solicitud
+req.end();
+    </code></pre>
+
+    <h4>Realizar una Solicitud POST</h4>
+    <pre><code>
+const http = require('http');
+
+const nuevoPost = JSON.stringify({
+  title: 'foo',
+  body: 'bar',
+  userId: 1
+});
+
+// Opciones para la solicitud
+const options = {
+  hostname: 'jsonplaceholder.typicode.com',
+  path: '/posts',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': nuevoPost.length
+  }
+};
+
+// Realizar la solicitud
+const req = http.request(options, (res) => {
+  let data = '';
+
+  // Recibir datos
+  res.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // Fin de la respuesta
+  res.on('end', () => {
+    console.log('Post creado:', JSON.parse(data)); // Mostrar los datos del post creado
+  });
+});
+
+// Manejar errores
+req.on('error', (error) => {
+  console.error('Error:', error.message);
+});
+
+// Enviar los datos
+req.write(nuevoPost);
+
+// Finalizar la solicitud
+req.end();
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Realizar Solicitudes HTTP con <code>axios</code>:</strong> Una biblioteca basada en promesas para realizar solicitudes HTTP de manera sencilla.
+            <ul>
+                <li><strong>GET:</strong> Recuperar datos.</li>
+                <li><strong>POST:</strong> Enviar datos para crear un recurso.</li>
+                <li><strong>PUT:</strong> Enviar datos para actualizar un recurso.</li>
+                <li><strong>DELETE:</strong> Eliminar un recurso.</li>
+            </ul>
+        </li>
+        <li><strong>Realizar Solicitudes HTTP con el Módulo <code>http</code>:</strong> Utilizar el módulo nativo para realizar solicitudes HTTP.
+            <ul>
+                <li><strong>GET:</strong> Opciones de solicitud, manejo de datos y errores.</li>
+                <li><strong>POST:</strong> Configuración de encabezados, envío de datos y manejo de errores.</li>
+            </ul>
+        </li>
+    </ul>
+    <h1>Mantener Aplicación en Ejecución y Uso de Nodemon</h1>
+
+    <h2>Mantener una Aplicación en Ejecución</h2>
+    <p>Para aplicaciones en producción, es crucial mantener la aplicación en ejecución incluso si ocurre un fallo o se detiene por alguna razón. Esto se puede lograr utilizando administradores de procesos como <code>pm2</code>.</p>
     
+    <h3>Uso de <code>pm2</code></h3>
+    <p><code>pm2</code> es un administrador de procesos para aplicaciones Node.js que facilita el despliegue y la administración de aplicaciones en producción.</p>
     
+    <h4>Instalación de <code>pm2</code></h4>
+    <pre><code>npm install -g pm2</code></pre>
+    
+    <h4>Ejemplos de Uso de <code>pm2</code></h4>
+    
+    <h5>Iniciar una Aplicación</h5>
+    <pre><code>pm2 start app.js</code></pre>
+    
+    <h5>Listar Procesos</h5>
+    <pre><code>pm2 list</code></pre>
+    
+    <h5>Detener una Aplicación</h5>
+    <pre><code>pm2 stop app.js</code></pre>
+    
+    <h5>Reiniciar una Aplicación</h5>
+    <pre><code>pm2 restart app.js</code></pre>
+    
+    <h5>Ver Logs</h5>
+    <pre><code>pm2 logs</code></pre>
+    
+    <h4>Ejemplo Completo con <code>pm2</code></h4>
+    <pre><code>
+# Iniciar la aplicación
+pm2 start app.js
+
+# Listar todos los procesos gestionados por pm2
+pm2 list
+
+# Detener la aplicación
+pm2 stop app.js
+
+# Reiniciar la aplicación
+pm2 restart app.js
+
+# Ver los logs de la aplicación
+pm2 logs
+    </code></pre>
+    
+    <h2>Uso de <code>nodemon</code></h2>
+    <p><code>nodemon</code> es una herramienta que ayuda en el desarrollo al reiniciar automáticamente la aplicación cuando se detectan cambios en los archivos del directorio. Esto elimina la necesidad de detener y reiniciar manualmente la aplicación cada vez que se realizan cambios en el código.</p>
+    
+    <h3>Instalación de <code>nodemon</code></h3>
+    <pre><code>npm install -g nodemon</code></pre>
+    
+    <h3>Ejemplos de Uso de <code>nodemon</code></h3>
+    
+    <h4>Iniciar una Aplicación con <code>nodemon</code></h4>
+    <pre><code>nodemon app.js</code></pre>
+    
+    <h4>Configurar <code>nodemon</code> con un Archivo de Configuración</h4>
+    <pre><code>
+{
+  "watch": ["src"],
+  "ext": "js,json",
+  "ignore": ["src/tests"],
+  "exec": "node --inspect src/app.js"
+}
+    </code></pre>
+    
+    <h4>Ejecutar <code>nodemon</code> con Configuración</h4>
+    <pre><code>nodemon</code></pre>
+    
+    <h3>Ejemplo Completo de Uso de <code>nodemon</code></h3>
+    <pre><code>
+# Iniciar la aplicación con nodemon
+nodemon app.js
+
+# Crear un archivo de configuración nodemon.json
+{
+  "watch": ["src"],
+  "ext": "js,json",
+  "ignore": ["src/tests"],
+  "exec": "node --inspect src/app.js"
+}
+
+# Ejecutar nodemon con el archivo de configuración
+nodemon
+    </code></pre>
+    
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Mantener Aplicación en Ejecución:</strong> Utiliza <code>pm2</code> para gestionar y mantener aplicaciones Node.js en ejecución en producción.
+            <ul>
+                <li><strong>Instalar <code>pm2</code>:</strong> <code>npm install -g pm2</code></li>
+                <li><strong>Comandos:</strong> <code>pm2 start</code>, <code>pm2 list</code>, <code>pm2 stop</code>, <code>pm2 restart</code>, <code>pm2 logs</code></li>
+            </ul>
+        </li>
+        <li><strong>Facilitar el Desarrollo con <code>nodemon</code>:</strong> Utiliza <code>nodemon</code> para reiniciar automáticamente la aplicación al detectar cambios en los archivos durante el desarrollo.
+            <ul>
+                <li><strong>Instalar <code>nodemon</code>:</strong> <code>npm install -g nodemon</code></li>
+                <li><strong>Comando:</strong> <code>nodemon app.js</code></li>
+                <li><strong>Archivo de Configuración:</strong> <code>nodemon.json</code></li>
+            </ul>
+        </li>
+    </ul>
+    <h1>Template Engines</h1>
+<p>Template engine helps us to create an HTML template with minimal code. Also, it can inject data into HTML template at client side and produce the final HTML.
+Some examples of template engines in Node.js are:</p>
+<ul>
+<li>Nunjucks</li>
+<li>Jade</li>
+<li>Vash</li>
+<li>EJS</li>
+<li>Handlebars</li>
+<li>HAML</li>
+</ul>
+<h1>Logging en Node.js</h1>
+
+<h2>Niveles de Logging</h2>
+<p>Los niveles de logging ayudan a categorizar la importancia de los mensajes registrados:</p>
+<ul>
+    <li><strong>error:</strong> Indica un problema grave que requiere atención inmediata.</li>
+    <li><strong>warn:</strong> Indica un posible problema que no es crítico.</li>
+    <li><strong>info:</strong> Proporciona información general sobre el funcionamiento del sistema.</li>
+    <li><strong>debug:</strong> Proporciona información detallada para depuración.</li>
+    <li><strong>verbose:</strong> Proporciona información muy detallada (más que debug).</li>
+</ul>
+
+<h2>Usar <code>console</code> para Logging</h2>
+<p>El uso de <code>console</code> es la forma más básica de implementar logging en Node.js.</p>
+<pre><code>
+console.log('Mensaje de información'); // Nivel info
+console.error('Mensaje de error'); // Nivel error
+console.warn('Mensaje de advertencia'); // Nivel warn
+console.debug('Mensaje de depuración'); // Nivel debug
+</code></pre>
+
+<h2>Usar <code>winston</code> para Logging</h2>
+<p><code>winston</code> es una biblioteca de logging para Node.js que proporciona una forma flexible y extensible de registrar mensajes.</p>
+
+<h3>Instalación de <code>winston</code></h3>
+<pre><code>npm install winston</code></pre>
+
+<h3>Ejemplo de Uso de <code>winston</code></h3>
+<pre><code>
+const winston = require('winston');
+
+const logger = winston.createLogger({
+level: 'info', // Nivel de logging
+format: winston.format.json(), // Formato de los mensajes
+transports: [
+new winston.transports.Console(), // Registrar en la consola
+new winston.transports.File({ filename: 'app.log' }) // Registrar en un archivo
+]
+});
+
+logger.info('Mensaje de información'); // Registrar un mensaje de nivel info
+logger.error('Mensaje de error'); // Registrar un mensaje de nivel error
+logger.warn('Mensaje de advertencia'); // Registrar un mensaje de nivel warn
+logger.debug('Mensaje de depuración'); // Registrar un mensaje de nivel debug
+</code></pre>
+
+<h2>Usar <code>morgan</code> para Logging de Solicitudes HTTP</h2>
+<p><code>morgan</code> es una biblioteca de middleware para Node.js que registra las solicitudes HTTP en aplicaciones Express.</p>
+
+<h3>Instalación de <code>morgan</code></h3>
+<pre><code>npm install morgan</code></pre>
+
+<h3>Ejemplo de Uso de <code>morgan</code> con Express</h3>
+<pre><code>
+const express = require('express');
+const morgan = require('morgan');
+const app = express();
+
+// Usar morgan para registrar las solicitudes HTTP
+app.use(morgan('combined'));
+
+app.get('/', (req, res) => {
+res.send('Hola, mundo!');
+});
+
+app.listen(3000, () => {
+console.log('Servidor escuchando en el puerto 3000');
+});
+</code></pre>
+
+<h2>Resumen</h2>
+<ul>
+    <li><strong>Niveles de Logging:</strong> Categorizar la importancia de los mensajes (error, warn, info, debug, verbose).</li>
+    <li><strong>Logging con <code>console</code>:</strong> Uso básico de <code>console.log</code>, <code>console.error</code>, <code>console.warn</code>, y <code>console.debug</code>.</li>
+    <li><strong>Logging con <code>winston</code>:</strong> Biblioteca flexible para registrar mensajes en la consola y en archivos.
+        <ul>
+            <li><strong>Instalar <code>winston</code>:</strong> <code>npm install winston</code></li>
+            <li><strong>Ejemplo de Uso:</strong> Crear un logger, definir niveles y formatos, agregar transportes.</li>
+        </ul>
+    </li>
+    <li><strong>Logging de Solicitudes HTTP con <code>morgan</code>:</strong> Biblioteca de middleware para registrar solicitudes HTTP en aplicaciones Express.
+        <ul>
+            <li><strong>Instalar <code>morgan</code>:</strong> <code>npm install morgan</code></li>
+            <li><strong>Ejemplo de Uso:</strong> Integrar <code>morgan</code> en una aplicación Express.</li>
+        </ul>
+    </li>
+</ul>
+<h1>Threads, Streams y Módulos Incorporados Comunes en Node.js</h1>
+
+    <h2>Threads (Hilos)</h2>
+    <p>Node.js es de un solo hilo (single-threaded) en su ejecución de JavaScript, pero utiliza un pool de hilos (thread pool) a través de la biblioteca libuv para manejar operaciones de I/O y otras tareas que pueden ser manejadas en paralelo.</p>
+
+    <h3>Worker Threads</h3>
+    <p>Desde Node.js 10.5.0, se introdujo el módulo <code>worker_threads</code> que permite la ejecución de JavaScript en múltiples hilos.</p>
+
+    <h4>Ejemplo de Uso de Worker Threads</h4>
+    <pre><code>
+// archivo: worker.js
+const { parentPort } = require('worker_threads');
+
+// Escuchar mensajes del hilo principal
+parentPort.on('message', (data) => {
+  // Realizar alguna operación intensiva
+  const result = data * 2;
+  // Enviar el resultado de vuelta al hilo principal
+  parentPort.postMessage(result);
+});
+
+// archivo: main.js
+const { Worker } = require('worker_threads');
+
+// Crear un nuevo Worker
+const worker = new Worker('./worker.js');
+
+// Enviar un mensaje al Worker
+worker.postMessage(10);
+
+// Escuchar mensajes del Worker
+worker.on('message', (result) => {
+  console.log('Resultado del Worker:', result);
+});
+    </code></pre>
+
+    <h2>Streams (Flujos)</h2>
+    <p>Los flujos en Node.js son una forma eficiente de manejar datos que se transfieren de manera continua. Los flujos permiten trabajar con datos de manera incremental sin tener que cargar todo el contenido en memoria.</p>
+
+    <h3>Tipos de Streams</h3>
+    <ul>
+        <li><strong>Readable Streams:</strong> Flujos de los que puedes leer datos (por ejemplo, <code>fs.createReadStream</code>).</li>
+        <li><strong>Writable Streams:</strong> Flujos a los que puedes escribir datos (por ejemplo, <code>fs.createWriteStream</code>).</li>
+        <li><strong>Duplex Streams:</strong> Flujos que son tanto <code>readable</code> como <code>writable</code> (por ejemplo, sockets).</li>
+        <li><strong>Transform Streams:</strong> Flujos que pueden modificar o transformar los datos mientras los leen y escriben (por ejemplo, <code>zlib.createGzip</code>).</li>
+    </ul>
+
+    <h3>Ejemplo de Uso de Streams</h3>
+
+    <h4>Leer y Escribir usando Streams</h4>
+    <pre><code>
+const fs = require('fs');
+
+// Crear un Readable Stream
+const readableStream = fs.createReadStream('input.txt');
+
+// Crear un Writable Stream
+const writableStream = fs.createWriteStream('output.txt');
+
+// Leer datos del readableStream y escribirlos en el writableStream
+readableStream.pipe(writableStream);
+
+readableStream.on('end', () => {
+  console.log('Lectura y escritura completa.');
+});
+    </code></pre>
+
+    <h4>Transform Stream</h4>
+    <pre><code>
+const { Transform } = require('stream');
+
+// Crear un Transform Stream que convierta a mayúsculas
+const uppercaseTransform = new Transform({
+  transform(chunk, encoding, callback) {
+    this.push(chunk.toString().toUpperCase());
+    callback();
+  }
+});
+
+process.stdin.pipe(uppercaseTransform).pipe(process.stdout);
+    </code></pre>
+
+    <h2>Common Built-in Modules (Módulos Incorporados Comunes)</h2>
+    <p>Node.js viene con una serie de módulos incorporados que facilitan el desarrollo de aplicaciones. Algunos de los módulos más comunes son:</p>
+
+    <h3><code>fs</code> (File System)</h3>
+    <p>Permite interactuar con el sistema de archivos para leer y escribir archivos.</p>
+    <pre><code>
+const fs = require('fs');
+
+// Leer un archivo de manera asíncrona
+fs.readFile('archivo.txt', 'utf8', (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
+
+// Escribir en un archivo de manera asíncrona
+fs.writeFile('archivo.txt', 'Hola, mundo!', (err) => {
+  if (err) throw err;
+  console.log('Archivo guardado!');
+});
+    </code></pre>
+
+    <h3><code>path</code></h3>
+    <p>Proporciona utilidades para trabajar con rutas de archivos y directorios.</p>
+    <pre><code>
+const path = require('path');
+
+const ruta = path.join(__dirname, 'carpeta', 'archivo.txt');
+console.log('Ruta:', ruta);
+
+const extension = path.extname(ruta);
+console.log('Extensión:', extension);
+    </code></pre>
+
+    <h3><code>http</code></h3>
+    <p>Permite crear servidores HTTP y manejar solicitudes y respuestas HTTP.</p>
+    <pre><code>
+const http = require('http');
+
+// Crear un servidor HTTP
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hola, mundo!');
+});
+
+server.listen(3000, '127.0.0.1', () => {
+  console.log('Servidor escuchando en http://127.0.0.1:3000/');
+});
+    </code></pre>
+
+    <h3><code>os</code></h3>
+    <p>Proporciona información sobre el sistema operativo y el entorno de ejecución.</p>
+    <pre><code>
+const os = require('os');
+
+console.log('Arquitectura del CPU:', os.arch());
+console.log('Número de CPUs:', os.cpus().length);
+console.log('Memoria libre:', os.freemem());
+console.log('Directorio temporal:', os.tmpdir());
+    </code></pre>
+
+    <h2>Resumen</h2>
+    <ul>
+        <li><strong>Threads:</strong> Node.js es de un solo hilo para la ejecución de JavaScript, pero puede usar <code>worker_threads</code> para tareas de computación intensiva en paralelo.
+            <ul>
+                <li><strong>Módulo <code>worker_threads</code>:</strong> Permite la ejecución de JavaScript en múltiples hilos.</li>
+            </ul>
+        </li>
+        <li><strong>Streams:</strong> Manejo eficiente de datos que se transfieren de manera continua.
+            <ul>
+                <li><strong>Tipos de Streams:</strong> Readable, Writable, Duplex, Transform.</li>
+                <li><strong>Ejemplos:</strong> Leer y escribir archivos, transformar datos.</li>
+            </ul>
+        </li>
+        <li><strong>Common Built-in Modules:</strong> Módulos incorporados que facilitan el desarrollo.
+            <ul>
+                <li><strong>fs:</strong> Interacción con el sistema de archivos.</li>
+                <li><strong>path:</strong> Utilidades para rutas de archivos y directorios.</li>
+                <li><strong>http:</strong> Crear servidores HTTP.</li>
+                <li><strong>os:</strong> Información del sistema operativo.</li>
+            </ul>
+        </li>
+    </ul>
 
 
 
