@@ -6,33 +6,61 @@
     <link rel="stylesheet" type="text/css" href="CheatSheetCss.css">
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-          const buttons = document.querySelectorAll('#botones-paginacion button');
+          const buttons = document.querySelectorAll('#nav-links button');
           const pages = document.querySelectorAll('.pagina');
-
+          const hamburger = document.getElementById('hamburger');
+          const navbar = document.getElementById('navbar');
+  
+          // Manejar clic en los botones del navbar
           buttons.forEach(button => {
               button.addEventListener('click', function() {
                   const page = this.getAttribute('data-page');
-                  pages.forEach(p => p.style.display = 'none');
-                  document.getElementById('pagina' + page).style.display = 'block';
+                  const externalHref = this.getAttribute('data-href');
+  
+                  if (page) {
+                      // Manejar paginación interna
+                      pages.forEach(p => p.style.display = 'none');
+                      const targetPage = document.getElementById('pagina' + page);
+                      if (targetPage) {
+                          targetPage.style.display = 'block';
+                      }
+  
+                      // Cerrar el menú en pantallas pequeñas
+                      if (window.innerWidth < 600) {
+                          navbar.classList.remove('responsive');
+                      }
+                  } else if (externalHref) {
+                      // Manejar navegación externa
+                      window.location.href = externalHref;
+                  }
               });
           });
-
-          // Initially display the first page
+  
+          // Mostrar la primera página inicialmente
           pages.forEach(p => p.style.display = 'none');
           document.getElementById('pagina1').style.display = 'block';
+  
+          // Manejar el clic en el botón hamburguesa
+          hamburger.addEventListener('click', function() {
+              navbar.classList.toggle('responsive');
+          });
       });
   </script>
     <title>Nodejs</title>
 </head>
 <body>
-  <div id="botones-paginacion">
-    <button onclick="window.location.href='HTMLCheatsheet.html'">Javascript Sheet</button>
-    <button data-page="2">VueJS Cheatsheet</button>
-    <button data-page="3">HTML Cheatsheet</button>
-    <button onclick="window.location.href='ReactCheatsheet.html'">React Cheat Sheet</button>
-    <button onclick="window.location.href='NodeJS.html'">NodeJS Cheat Sheet</button>
-
-</div>
+  <nav class="navbar" id="navbar">
+    <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <ul id="nav-links">
+      <li><button class="external-link" data-href="HTMLCheatsheet.html">React Cheat Sheet</button></li>
+        <li><button class="external-link" data-href="ReactCheatsheet.html">React Cheat Sheet</button></li>
+        <li><button class="external-link" data-href="NodeJS.html">NodeJS Cheat Sheet</button></li>
+    </ul>
+</nav>
    <h1>Nodejs</h1>
    <h1>Módulos en Node.js</h1>
 
