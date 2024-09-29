@@ -9,19 +9,31 @@ divprimero {
 }
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
+    line-height: 2;
     margin: 20px;
 }
 code {
     background-color: #f4f4f4;
     padding: 2px 4px;
     border-radius: 4px;
+    text-align: center;
 }
 pre {
     background-color: #f4f4f4;
     padding: 10px;
     border-radius: 4px;
     overflow-x: auto;
+}
+h1 {
+    text-align: center;
+  }
+h2 {
+text-align: center;
+}
+ul, p, pre, img, h3, ol, h4, h5 {
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: justify;
 }
 
 

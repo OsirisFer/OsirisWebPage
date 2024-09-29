@@ -6,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>NoBsRoadmaps</title>
     <link rel="stylesheet" type="text/css" href="CheatSheetCss.css">
-    <script src="PruebaPrueba.js"></script>
+    
+
 </head>
 <body>
     <a href="ReactCheatsheet.html">React Cheat Sheet</a>
     <a href="NodeJS.html">NodeJS Cheat Sheet</a>
 
     <div id="botones-paginacion">
-        <button onclick="mostrarPagina(1)">1</button>
-        <button onclick="mostrarPagina(2)">2</button>
-        <button onclick="mostrarPagina(3)">3</button>
-        <button onclick="mostrarPagina(4)">4</button>
+        <button data-page="1">1</button>
+        <button data-page="2">2</button>
+        <button data-page="3">3</button>
+        <button data-page="4">4</button>
     </div>
 
     <div id="contenido-paginado">
@@ -29,13 +30,13 @@
                 <li>let y const si se declaran en un bloque de código, solo pueden ser accedidas dentro de ese bloque (if, for, while, etc)</li>
             </ul>
             
-            Hoisting lo que hace es que las variables y constantes suben al inicio del código, entonces existen para el compilador pero<br>
+            <p>Hoisting lo que hace es que las variables y constantes suben al inicio del código, entonces existen para el compilador pero<br>
             pero no con su valor asignado, por lo que si se intenta acceder a ellas antes de ser declaradas, se obtendrá un valor undefined<br>
             <code>console.log(x);</code> // Output: <code>undefined</code><br>
             <code>var x = 5;</code><br>
             <code>console.log(x);</code> // Output: <code>5</code><br><br>
             Usar camelCase para nombrar variables y constantes ej: hoistedVariable son case-sensitive así que hoistedvariable no es lo mismo<br>
-        </p>
+        </p></p>
         <h2>Tipos de Datos en JavaScript</h2>
     <ul>
         <li>Number: Representa enteros y números de punto flotante. Ejemplo: <code><strong>let num = 10;</strong></code></li>
@@ -152,10 +153,10 @@
         <h1>Typecasting en JavaScript</h1>
 
         <h2>Conversión implícita</h2>
-        <p>JavaScript realiza conversiones implícitas de tipos cuando se realiza una operación entre tipos de datos diferentes. Por ejemplo:</p>
+        <p>JavaScript realiza conversiones implícitas de tipos cuando se realiza una operación entre tipos de datos diferentes. Por ejemplo:<br>
         <code>let x = 10 + "20"; // x es "1020" (string)</code><br>
         <code>let y = "10" - 5; // y es 5 (number)</code>
-    
+    </p>
         <h2>Conversión explícita</h2>
         <p>Se puede realizar conversión explícita utilizando funciones o operadores específicos:</p>
         <ul>
@@ -171,7 +172,7 @@
     <h2>Array</h2>
     <p>Un array es una estructura de datos que se utiliza para almacenar una colección de elementos. Puedes inicializar un array con elementos predefinidos o crear un array vacío y agregar elementos a él dinámicamente.</p>
     <p>Ejemplo:</p>
-    <pre><code>let numeros = [1, 2, 3, 4, 5];</code></pre>
+    <p><pre><code>let numeros = [1, 2, 3, 4, 5];</code></pre></p>
 
     <h2>TypedArray</h2>
     <p>TypedArray es un tipo especial de array en JavaScript que proporciona un mecanismo eficiente para trabajar con datos binarios y de tipo específico. A diferencia de los arrays normales, los TypedArray están diseñados para contener elementos de un tipo específico y se utilizan principalmente en operaciones que requieren un acceso rápido a los datos binarios.</p>
@@ -832,9 +833,9 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
     <p><code>addEventListener</code> es un método en JavaScript que permite añadir un evento a un elemento del DOM (Document Object Model). Este método es fundamental para crear interactividad en las páginas web.</p>
 
     <h3>Sintaxis:</h3>
-    <code>
+    <pre><code>
         element.addEventListener(event, function, useCapture);
-    </code>
+    </code></pre>
     <ul>
         <li><strong>element</strong>: El elemento del DOM al que deseas añadir el evento.</li>
         <li><strong>event</strong>: El tipo de evento que quieres escuchar (por ejemplo, 'click', 'mouseover', 'keydown', etc.).</li>
@@ -843,11 +844,11 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
     </ul>
 
     <h3>Ejemplo:</h3>
-    <code>
+    <pre><code>
         document.getElementById('myButton').addEventListener('click', function() {
             alert('Button was clicked!');
         });
-    </code>
+    </code></pre>
 
     <h2>document</h2>
     <p><code>document</code> es un objeto global que representa el documento HTML o XML cargado en el navegador. Proporciona varias propiedades y métodos para acceder y manipular el contenido y estructura del documento.</p>
@@ -861,10 +862,10 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
     </ul>
 
     <h3>Ejemplo:</h3>
-    <code>
+    <pre><code>
         let element = document.getElementById('myElement');
         element.style.color = 'red';
-    </code>
+    </code></pre>
 
     <h2>Bundlers</h2>
     <p>Los bundlers son herramientas que toman módulos de código (JavaScript, CSS, imágenes, etc.) y los combinan en un único archivo o en unos pocos archivos, optimizados para el navegador. Esto mejora la eficiencia del sitio web, reduciendo el número de solicitudes HTTP y optimizando el rendimiento.</p>
@@ -874,7 +875,7 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
     <h4>Webpack</h4>
     <p>Una herramienta muy flexible y poderosa que permite gestionar, empaquetar y optimizar los módulos. Soporta loaders y plugins para transformar y optimizar diferentes tipos de archivos.</p>
     <h5>Ejemplo de configuración:</h5>
-    <code>
+    <pre><code>
         // webpack.config.js
         module.exports = {
             entry: './src/index.js',
@@ -896,19 +897,19 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
                 ]
             }
         };
-    </code>
+    </code></pre>
 
     <h4>Parcel</h4>
     <p>Un bundler sencillo y rápido que requiere poca configuración. Detecta automáticamente los diferentes tipos de archivos y los gestiona adecuadamente.</p>
     <h5>Ejemplo de uso:</h5>
-    <code>
+    <pre><code>
         parcel index.html
-    </code>
+    </code></pre>
 
     <h4>Rollup</h4>
     <p>Enfocado en la construcción de bibliotecas JavaScript, Rollup crea paquetes más pequeños y eficientes utilizando la sintaxis de módulos ES6.</p>
     <h5>Ejemplo de configuración:</h5>
-    <code>
+    <pre><code>
         // rollup.config.js
         import commonjs from '@rollup/plugin-commonjs';
         import resolve from '@rollup/plugin-node-resolve';
@@ -927,7 +928,7 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
                 babel({ babelHelpers: 'bundled' })
             ]
         };
-    </code>
+    </code></pre>
 
     <p>Cada uno de estos bundlers tiene sus propias ventajas y desventajas, y la elección depende de las necesidades específicas del proyecto.</p>
 
@@ -1090,14 +1091,6 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
 
         </div>
 
-
-        <div id="botones-paginacion">
-            <button onclick="mostrarPagina(1)">1</button>
-            <button onclick="mostrarPagina(2)">2</button>
-            <button onclick="mostrarPagina(3)">3</button>
-            <button onclick="mostrarPagina(4)">4</button>
-        </div>
-
     
    
     
@@ -1114,6 +1107,7 @@ Como incluir estilos:
 	-a traves de las cabeceras HTTP 
 -->
 
+<script src="script.js"></script>
 
     
 </body>
