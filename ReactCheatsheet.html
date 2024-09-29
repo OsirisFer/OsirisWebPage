@@ -127,32 +127,32 @@
   <h3>Props</h3>
   <p>Las <code>props</code> (abreviatura de "properties") son datos que se pasan de un componente padre a un componente hijo. Se utilizan para configurar y personalizar el componente hijo. Las <code>props</code> son inmutables, lo que significa que un componente no puede cambiar sus propias <code>props</code>. Esto garantiza un flujo de datos unidireccional y predecible en la aplicación.</p>
   <p>Un ejemplo simple de uso de <code>props</code>:</p>
-  <code>
+  <pre><code>
       const ComponenteHijo = ({ mensaje }) => {<br>
           return &lt;div&gt;{mensaje}&lt;/div&gt;;<br>
       };<br><br>
       const ComponentePadre = () => {<br>
           return &lt;ComponenteHijo mensaje="Hola, mundo!" /&gt;;<br>
       };
-  </code>
+  </code></pre>
   <h3>State</h3>
   <p>El <code>state</code> es un objeto que pertenece a un componente y que se utiliza para almacenar datos que pueden cambiar a lo largo del ciclo de vida del componente. A diferencia de las <code>props</code>, el <code>state</code> es mutable y puede ser modificado dentro del propio componente, lo que permite actualizar la UI en respuesta a eventos del usuario o cambios en los datos.</p>
   <p>Un ejemplo simple de uso de <code>state</code>:</p>
-  <code>
-      import React, { useState } from 'react';<br><br>
-      const ComponenteConEstado = () => {<br>
-          const [contador, setContador] = useState(0);<br><br>
-          const incrementar = () => {<br>
-              setContador(contador + 1);<br>
-          };<br><br>
-          return (<br>
-              &lt;div&gt;<br>
-                  &lt;p&gt;Contador: {contador}&lt;/p&gt;<br>
-                  &lt;button onClick={incrementar}&gt;Incrementar&lt;/button&gt;<br>
-              &lt;/div&gt;<br>
-          );<br>
+  <pre><code>
+      import React, { useState } from 'react';
+      const ComponenteConEstado = () => {
+          const [contador, setContador] = useState(0);
+          const incrementar = () => {
+              setContador(contador + 1);
+          };
+          return (
+              &lt;div&gt;
+                  &lt;p&gt;Contador: {contador}&lt;/p&gt;
+                  &lt;button onClick={incrementar}&gt;Incrementar&lt;/button&gt;
+              &lt;/div&gt;
+          );
       };
-  </code>
+  </code></pre>
   <h3>Diferencias clave</h3>
   <ul>
       <li><b>Inmutabilidad:</b> Las <code>props</code> son inmutables, mientras que el <code>state</code> es mutable.</li>
@@ -163,22 +163,22 @@
   <p>En React, la composición y la herencia son dos formas de reutilizar el código y estructurar los componentes. React prefiere la composición sobre la herencia debido a la flexibilidad y simplicidad que ofrece.</p>
   <h3>Definición de los componentes</h3>
 <p>Primero, definimos los componentes individuales:</p>
-<code>
-    const Tarjeta = ({ children }) => {<br>
-        return (&lt;div className="tarjeta"&gt;{children}&lt;/div&gt;);<br>
-    };<br><br>
-    const Encabezado = ({ titulo }) => {<br>
-        return (&lt;h1&gt;{titulo}&lt;/h1&gt;);<br>
-    };<br><br>
-    const Contenido = ({ texto }) => {<br>
-        return (&lt;p&gt;{texto}&lt;/p&gt;);<br>
+<pre><code>
+    const Tarjeta = ({ children }) => {
+        return (&lt;div className="tarjeta"&gt;{children}&lt;/div&gt;);
     };
-</code>
+    const Encabezado = ({ titulo }) => {
+        return (&lt;h1&gt;{titulo}&lt;/h1&gt;);
+    };
+    const Contenido = ({ texto }) => {
+        return (&lt;p&gt;{texto}&lt;/p&gt;);
+    };
+</code></pre>
 <p>Aquí, <code>Tarjeta</code> es un contenedor genérico que puede envolver cualquier contenido que se le pase como <code>children</code>. <code>Encabezado</code> y <code>Contenido</code> son componentes simples que reciben datos a través de <code>props</code> y los renderizan.</p>
 
 <h3>Composición de los componentes</h3>
 <p>Ahora, podemos componer estos componentes en un componente más complejo llamado <code>TarjetaCompleta</code>:</p>
-<code>
+<pre><code>
     const TarjetaCompleta = () => {<br>
         return (<br>
             &lt;Tarjeta&gt;<br>
@@ -187,7 +187,7 @@
             &lt;/Tarjeta&gt;<br>
         );<br>
     };
-</code>
+</code></pre>
 <p>En este ejemplo, <code>TarjetaCompleta</code> utiliza los componentes <code>Tarjeta</code>, <code>Encabezado</code> y <code>Contenido</code> para construir una tarjeta completa. Cada componente se encarga de una parte específica de la UI, y al combinarlos, obtenemos una estructura más compleja.</p>
 
 <h3>Ventajas de la Composición</h3>
@@ -203,21 +203,21 @@
   <p>La herencia, en términos de programación orientada a objetos, permite que una clase herede características (métodos y propiedades) de otra clase. Sin embargo, en React, este enfoque no se utiliza comúnmente porque puede llevar a estructuras de componentes rígidas y difíciles de mantener.</p>
   <p>En lugar de herencia, React promueve la reutilización de código a través de la composición. Sin embargo, es posible usar herencia en JavaScript para componentes de React, pero no es la práctica recomendada.</p>
   <p>Ejemplo de herencia en JavaScript:</p>
-  <code>
-      class ComponenteBase extends React.Component {<br>
-          render() {<br>
-              return &lt;div&gt;Componente base&lt;/div&gt;;<br>
-          }<br>
-      }<br><br>
-      class ComponenteDerivado extends ComponenteBase {<br>
-          render() {<br>
-              return (&lt;div&gt;<br>
-                  {super.render()}<br>
-                  &lt;div&gt;Componente derivado&lt;/div&gt;<br>
-              &lt;/div&gt;);<br>
-          }<br>
+  <pre><code>
+      class ComponenteBase extends React.Component {
+          render() {
+              return &lt;div&gt;Componente base&lt;/div&gt;;
+          }
       }
-  </code>
+      class ComponenteDerivado extends ComponenteBase {
+          render() {
+              return (&lt;div&gt;
+                  {super.render()}
+                  &lt;div&gt;Componente derivado&lt;/div&gt;
+              &lt;/div&gt;);
+          }
+      }
+  </code></pre>
   <h3>Diferencias clave</h3>
   <ul>
       <li><b>Flexibilidad:</b> La composición ofrece más flexibilidad, permitiendo combinar componentes de diferentes maneras, mientras que la herencia puede resultar en una jerarquía de componentes rígida.</li>

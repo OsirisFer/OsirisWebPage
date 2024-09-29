@@ -55,7 +55,7 @@
     </ul>
     <h2>Creación de objetos:</h2>
     <p>
-        <pre><code></code>
+        <pre><code>
             let persona = {
                 nombre: "Juan",
                 edad: 30,
@@ -66,11 +66,11 @@
     <p>Un objeto en JavaScript es una colección de pares clave-valor. En este ejemplo, se crea un objeto llamado <code>persona</code> con tres propiedades: <code>nombre</code>, <code>edad</code> y <code>casado</code>.</p>
     <h2>Acceso a las propiedades:</h2>
     <p>
-        <code>
+        <pre><code>
             console.log(persona.nombre); // Juan
             <br>
             console.log(persona['edad']); // 30
-        </code>
+        </code></pre>
     </p>
     <p>Las propiedades de un objeto se pueden acceder utilizando la notación de punto o la notación de corchetes.</p>
     <h2>Métodos de los objetos:</h2>
@@ -91,7 +91,7 @@
     <p>Los objetos en JavaScript pueden contener métodos, que son funciones asociadas al objeto. En este ejemplo, <code>saludar</code> es un método de <code>persona</code> que imprime un saludo.</p>
     <h2>Herencia de objetos:</h2>
     <p>
-        <code>
+       <pre><code>
             function Animal(nombre) {
                 this.nombre = nombre;
             }
@@ -102,7 +102,7 @@
             let perro = new Animal("Perro");
             <br>
             perro.saludar(); // Hola, soy un Perro
-        </code>
+        </code></pre> 
     </p>
     <p>Los objetos en JavaScript pueden heredar propiedades y métodos de otros objetos a través del prototipo. En este ejemplo, se define un constructor <code>Animal</code> con un método <code>saludar</code> que es heredado por el objeto <code>perro</code>.
         Cuando intentas acceder a una propiedad de un objeto, JavaScript primero busca esa propiedad en el objeto mismo. Si no la encuentra, busca en el prototipo del objeto y luego en el prototipo del prototipo, y así sucesivamente hasta llegar al prototipo null.
@@ -143,24 +143,30 @@
         <li><strong>Math:</strong> Proporciona métodos y constantes matemáticas útiles.
             <code>let raizCuadrada = Math.sqrt(16);</code>
         </li>
-        <li><strong>JSON:</strong> Utilizado para trabajar con el formato de intercambio de datos JSON.
-            <code>let personaJSON = '{"nombre": "Juan", "edad": 30}';</code>;<br>
-            Puedes convertir un objeto JavaScript a una cadena JSON utilizando el método JSON.stringify():
-            <code>persona = { nombre: "Juan", edad: 30 };<br>
-            let personaJSON = JSON.stringify(persona);<br>
-            console.log(personaJSON); // '{"nombre":"Juan","edad":30}'</code> 
-        </li>
-    </ul> 
+        <strong>JSON:</strong> Utilizado para trabajar con el formato de intercambio de datos JSON.
+    </ul>
+<pre><code>let personaJSON = '{"nombre": "Juan", "edad": 30}';</code></pre>
+
+            <p>Puedes convertir un objeto JavaScript a una cadena JSON utilizando el método JSON.stringify():</p>
+            <pre><code></code>
+            persona = { nombre: "Juan", edad: 30 };
+            let personaJSON = JSON.stringify(persona);
+            console.log(personaJSON); // '{"nombre":"Juan","edad":30}'</code></pre>
+    
     <h2>Typeof</h2>
-    <p>typeof es un operador en JavaScript que se utiliza para obtener el tipo de datos de una variable o expresión. <code>let x = 10;<br>
-        console.log(typeof x); // "number"</code></p>
+    <p>typeof es un operador en JavaScript que se utiliza para obtener el tipo de datos de una variable o expresión. 
+        </p><pre><code>
+            let x = 10;
+            console.log(typeof x); // "number"</code></pre>
     
         <h1>Typecasting en JavaScript</h1>
 
         <h2>Conversión implícita</h2>
         <p>JavaScript realiza conversiones implícitas de tipos cuando se realiza una operación entre tipos de datos diferentes. Por ejemplo:<br>
-        <code>let x = 10 + "20"; // x es "1020" (string)</code><br>
-        <code>let y = "10" - 5; // y es 5 (number)</code>
+        <pre><code>
+        let x = 10 + "20"; // x es "1020" (string)
+        let y = "10" - 5; // y es 5 (number)        </code>
+        </pre>
     </p>
         <h2>Conversión explícita</h2>
         <p>Se puede realizar conversión explícita utilizando funciones o operadores específicos:</p>
@@ -197,18 +203,19 @@
     <p>El objeto WeakMap es una colección de pares clave/valor en la que las claves son objetos y los valores pueden ser de cualquier tipo. A diferencia de un Map estándar, las claves en un WeakMap son débiles (weak), lo que significa que no evitan que los objetos utilizados como claves sean eliminados por el recolector de basura si no hay otras referencias a ellos fuera del WeakMap.</p>
     <p>Ejemplo:</p>
     <pre><code>let weakMap = new WeakMap();<br>let key = {};<br>weakMap.set(key, "value");</code></pre>
-    <p>Lo que hacen estos weakmap y weakset es que pueden ser borrados por el garbage collector cuando ya no son accesibles o referenciados por ninguna parte del código<br><b>Ejemplo con Weakmap vs Map</b><br><code> john = { name: "John" };<br>
-        let weakMap = new WeakMap();<br>
-        weakMap.set(john, "...");<br>
+    <p>Lo que hacen estos weakmap y weakset es que pueden ser borrados por el garbage collector cuando ya no son accesibles o referenciados por ninguna parte del código<br><b>Ejemplo con Weakmap vs Map</b>
+        <pre><code>       john = { name: "John" };
+        let weakMap = new WeakMap();
+        weakMap.set(john, "...");
         john = null; // overwrite the reference<br>
-        // john is removed from memory!<br>
-        <br>
-        let john = { name: "John" };<br>
-        let array = [ john ];<br>
-        john = null; // overwrite the reference<br>
-        // the object previously referenced by john is stored inside the array<br>
-        // therefore it won't be garbage-collected<br>
-        // we can get it as array[0]</code></p>
+        // john is removed from memory!
+        
+        let john = { name: "John" };
+        let array = [ john ];
+        john = null; // overwrite the reference
+        // the object previously referenced by john is stored inside the array
+        // therefore it won't be garbage-collected
+        // we can get it as array[0]</code></pre></p>
     <h2>WeakSet</h2>
     <p>El objeto WeakSet es una colección de objetos. A diferencia de Set, los objetos en un WeakSet son débiles (weak), lo que significa que si no hay otras referencias a un objeto almacenado en un WeakSet, el recolector de basura puede eliminar el objeto de la memoria.</p>
     <p>Ejemplo:</p>
@@ -229,12 +236,14 @@
     <h2>Object.is()</h2>
     <ul>
         <li>se utiliza sobre los operadores de igualdad estricta (===) cuando se desea una comparación de igualdad aún más estricta y precisa. Aunque === es generalmente seguro y confiable para comparar valores en JavaScript, tiene algunas peculiaridades que pueden conducir a resultados inesperados en ciertos casos. Object.is() aborda estas peculiaridades al proporcionar una comparación más precisa en los siguientes casos:</li>
-        <li><code>console.log(NaN === NaN);    // false <br>
-        console.log(Object.is(NaN, NaN)); // true</code><br></li>
-        <li><code>console.log(-0 === +0);    // true<br>
-            console.log(Object.is(-0, +0)); // false</code><br>
-        </li>
-    </ul>
+    </ul>    
+        <pre><code>
+        console.log(NaN === NaN);    // false 
+        console.log(Object.is(NaN, NaN)); // true
+        console.log(-0 === +0);    // true
+        console.log(Object.is(-0, +0)); // false
+        </code></pre>
+    
     <h2>For in y For of</h2>
     <p>For in se utiliza para iterar sobre las propiedades de un objeto. For of se utiliza para iterar sobre los elementos de un objeto iterable como un array o un string.</p>
     <h2>Ejemplo de uso de break y continue en JavaScript</h2>
@@ -275,9 +284,7 @@
             break outerloop;
           }
         }
-      }
-    </code>
-  </pre>
+      }</code> </pre>
     <p>En este ejemplo, la etiqueta "outerloop" está asociada al bucle exterior y "innerloop" al bucle interior. La declaración <code>break outerloop;</code> hace que se salga del bucle etiquetado como "outerloop", terminando ambos bucles.</p>
     <h2>Manejo de Excepciones en JavaScript</h2>
     <p>El manejo de excepciones se utiliza para controlar errores que pueden ocurrir durante la ejecución de un programa, javascript creara un objeto error con dos propiedades nombre y mensaje.</p>
@@ -382,14 +389,15 @@
             let p = new Persona();
         </code></pre>
         <p>Las Arrow Functions no pueden ser utilizadas como constructores para crear objetos y no tienen su propio <code>this</code>.</p>
-        <p><code>() => expression</code></p>
-        <p><code>param => expression</code></p>
-        <p><code>(param) => expression</code></p>
-        <p><code>(param1, paramN) => expression</code></p>
+        <pre><code>
+        () => expression
+        param => expression
+        (param) => expression
+        (param1, paramN) => expression
         
-        <p><code>() => { statements }</code></p>
-        <p><code>param => { statements }</code></p>
-        <p><code>(param1, paramN) => { statements }</code></p>
+        () => { statements }
+        param => { statements }
+        (param1, paramN) => { statements }</code></pre>
         <h2>IIFE en JavaScript</h2>
         <p>Las IIFE (Immediately Invoked Function Expressions) en JavaScript son funciones que se ejecutan inmediatamente después de ser definidas. Son útiles en situaciones donde necesitas ejecutar una función de forma inmediata y luego descartarla, lo que ayuda a evitar la contaminación del ámbito global y a mantener el código más organizado.</p>
         <p>Sintaxis básica: 
@@ -515,11 +523,12 @@
         <ol>
         <li><strong>En el contexto global:</strong> <code>this</code> se refiere al objeto global en el navegador (<code>window</code> en un navegador web) o al objeto global en Node.js (<code>global</code> en Node.js).</li>
                 <li><strong>En el contexto de una función:</strong> 
-            <ul>
+            
                 <li>Si se llama a la función como un método de un objeto, <code>this</code> se refiere al objeto que posee el método.</li>
                 <li>Si se llama a la función como una función normal, <code>this</code> se refiere al objeto global (o <code>undefined</code> en modo estricto).</li>
-            </ul>
-            <code>
+            
+        </ol>
+            <pre><code>
                 let objeto = {
                     nombre: 'Juan',
                     saludar: function() {
@@ -529,11 +538,13 @@
                 objeto.saludar(); // Hola, mi nombre es Juan                
                 let saludarFuncion = objeto.saludar;
                 saludarFuncion(); // TypeError en modo estricto, de lo contrario: Hola, mi nombre es undefined o Hola, mi nombre es [nombre global]
-            </code>
+            </code></pre>
+            <ol>
         </li>        
         <li><strong>En el contexto de un evento:</strong> <code>this</code> se refiere al elemento en sí en un manejador de eventos en un elemento HTML.</li>
                 <li><strong>En el contexto de una función flecha:</strong> En una función flecha, <code>this</code> se mantiene del ámbito exterior al que pertenece la función flecha, en lugar de ser dinámico como en las funciones regulares.</li>
-        <code>
+            </ol> 
+            <pre><code>
             let objeto = {
                 nombre: 'María',
                 saludar: function() {
@@ -543,8 +554,8 @@
                 }
             };            
             objeto.saludar(); // Hola, mi nombre es María después de 1 segundo
-        </code>
-    </ol>    
+        </code></pre>
+       
     <p>Entender cómo funciona <code>this</code> es importante para evitar errores y utilizarlo correctamente en diferentes situaciones en JavaScript.</p>
     <p>In an object method, this refers to the object<br>
         Alone, this refers to the global object<br>
@@ -590,9 +601,9 @@
         Acceder a la cámara o al micrófono de un usuario utilizando getUserMedia()<br>
         Pedir a un usuario que seleccione archivos utilizando showOpenFilePicker()</p>
         <p>Hay varias formas de lograr la asincronía en JavaScript:</p>
-            <ol>
+            <ul>
             <li><strong>Callbacks:</strong> Los callbacks son funciones que se pasan como argumentos a otras funciones y se ejecutan después de que se completa una operación asincrónica. Los callbacks son una forma común de trabajar con operaciones asíncronas en JavaScript, pero como pueden llevar a un código anidado y difícil de leer (callback hell) ya no se usan tanto.</li>
-                <pre><code>
+                </ul><pre><code>
                     function doStep1(init, callback) {
                         const result = init + 1;
                         callback(result);
@@ -620,9 +631,12 @@
                       
                       doOperation();
                 </code></pre>
-            </li>            
+            </li> 
+            </ul>
+            <ul>           
             <li><strong>Promesas:</strong> Las promesas representan un valor que puede estar disponible ahora, en el futuro o nunca. Permiten encadenar operaciones asincrónicas de manera más legible y manejar errores de manera más efectiva.
-                <pre><code>
+            </ul>
+            <pre><code>
                     function hacerAlgoAsincrono() {
                         return new Promise(function(resolve, reject) {
                             setTimeout(function() {
@@ -636,9 +650,11 @@
                         console.log('Continuando con el flujo de trabajo');
                     });
                 </code></pre>
+            <ul>
             </li>            
             <li><strong>Async/await:</strong> La sintaxis async/await es una forma de escribir código asincrónico de manera síncrona. Permite que una función asíncrona se comporte como una función síncrona al utilizar la palabra clave await para esperar que se resuelva una promesa.
-                <pre><code>
+            </ul>
+            <pre><code>
                     async function hacerAlgoAsincrono() {
                         return new Promise(function(resolve, reject) {
                             setTimeout(function() {
@@ -655,7 +671,7 @@
                     ejecutar();
                 </code></pre>
             </li>
-        </ol>        
+        </ul>        
         <p>En resumen, JavaScript ofrece varias formas de trabajar de manera asíncrona, lo que es fundamental para construir aplicaciones web interactivas y eficientes. La elección de la técnica adecuada depende del caso de uso específico y de las preferencias de estilo de codificación.</p>
         <h2>setTimeout y setInterval en JavaScript</h2>
             <h3>setTimeout</h3>
