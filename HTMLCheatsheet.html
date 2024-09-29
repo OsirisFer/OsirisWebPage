@@ -2,22 +2,40 @@
 <html>
 	<!-- Metadatos -->
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>NoBsRoadmaps</title>
+    <title>NoBsRoadmaps</title>
     <link rel="stylesheet" type="text/css" href="CheatSheetCss.css">
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('#botones-paginacion button');
+            const pages = document.querySelectorAll('.pagina');
 
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const page = this.getAttribute('data-page');
+                    pages.forEach(p => p.style.display = 'none');
+                    document.getElementById('pagina' + page).style.display = 'block';
+                });
+            });
+
+            // Initially display the first page
+            pages.forEach(p => p.style.display = 'none');
+            document.getElementById('pagina1').style.display = 'block';
+        });
+    </script>
 </head>
 <body>
     <a href="ReactCheatsheet.html">React Cheat Sheet</a>
     <a href="NodeJS.html">NodeJS Cheat Sheet</a>
 
     <div id="botones-paginacion">
-        <button data-page="1">1</button>
-        <button data-page="2">2</button>
-        <button data-page="3">3</button>
-        <button data-page="4">4</button>
+        <button data-page="1">Javascript Cheatsheet</button>
+        <button data-page="2">VueJS Cheatsheet</button>
+        <button data-page="3">HTML Cheatsheet</button>
+        <button onclick="window.location.href='ReactCheatsheet.html'">React Cheat Sheet</button>
+        <button onclick="window.location.href='NodeJS.html'">NodeJS Cheat Sheet</button>
+
     </div>
 
     <div id="contenido-paginado">
@@ -937,52 +955,12 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
 
 </div>
         <div class="pagina" id="pagina2" style="display: none;">
-        <h1>NETSUITE CHEATSHEET</h1> 
-        <H2>Entities</H2>
-        <p>Entities are the people, places, and things that interact with your business. In NetSuite, entities are represented by records in the system. There are several types of entities in NetSuite, including:</p> 
-        <ul>
-            <li><strong>Customers:</strong> Individuals or companies that purchase goods or services from your business.</li>
-            <li><strong>Vendors:</strong> Individuals or companies that provide goods or services to your business.</li>
-            <li><strong>Employees:</strong> Individuals who work for your business.</li>
-            <li><strong>Partners:</strong> Individuals or companies that collaborate with your business.</li>
-            <li><strong>Contacts:</strong> Individuals associated with customers, vendors, employees, or partners.</li>
-        </ul>  
-        <h2>Items</h2>
-        <ul>
-            <li><strong>Inventory Items:</strong> Physical goods that you buy, sell, or manufacture.</li>
-            <li><strong>Non-Inventory Items:</strong> Goods or services that you buy or sell but do not track as inventory.</li>
-            <li><strong>Service Items:</strong> Services that you provide to customers.</li>
-            <li><strong>Assembly Items:</strong> Items that are built from other items.</li>
-            <li><strong>Kit Items:</strong> Groups of items that are sold together as a single unit.</li>
-        </ul>
-        <h2>Transactions</h2>
-        <ul>
-            <li><strong>Sales Orders:</strong> Orders from customers for goods or services.</li>
-            <li><strong>Purchase Orders:</strong> Orders to vendors for goods or services.</li>
-            <li><strong>Invoices:</strong> Bills to customers for goods or services.</li>
-            <li><strong>Bills:</strong> Invoices from vendors for goods or services.</li>
-            <li><strong>Payments:</strong> Payments from customers or to vendors.</li>
-            <li><strong>Journal Entries:</strong> Accounting transactions that affect the general ledger.</li>
-        </ul>
-        <h2> Ways of Bringing Data</h2>
-        <ul>
-            <li><strong>Importing:</strong> Importing data into NetSuite from external sources, such as CSV files or other systems.</li>
-            <li><strong>Integration:</strong> Integrating NetSuite with other systems, such as CRM, ERP, or e-commerce platforms.</li>
-            <li><strong>Manual Entry:</strong> Manually entering data into NetSuite using the user interface.</li>
-            <li><strong>Web Services:</strong> Using web services to interact with NetSuite programmatically.</li>
-        </ul>
-
-
-
-
+        <h1>VueJS</h1> 
         
         </div>
        
+       
         <div class="pagina" id="pagina3" style="display: none;">
-            <a href="ReactCheatsheet.html">React Cheat Sheet</a>
-             
-        </div>
-        <div class="pagina" id="pagina4" style="display: none;">
             <h1>HTML CHEATSHEET</h1>
             <H2>AGRUPADORES</H2>
             <dl>
@@ -1091,8 +1069,7 @@ console.log(element); // Devuelve el primer &lt;input&gt; elemento con type="tex
 
         </div>
 
-    
-   
+        
     
 <!-- Las Clases están para poner que un elemento es de un determinado tipo, pero cuando un elemento es de un determinado tipo
 se espera de que tenga sub-elementos adentro.
@@ -1107,7 +1084,15 @@ Como incluir estilos:
 	-a traves de las cabeceras HTTP 
 -->
 
-<script src="script.js"></script>
+<div id="botones-paginacion">
+    <button data-page="1">Javascript Cheatsheet</button>
+    <button data-page="2">VueJS Cheatsheet</button>
+    <button data-page="3">HTML Cheatsheet</button>
+    <button onclick="window.location.href='ReactCheatsheet.html'">React Cheat Sheet</button>
+    <button onclick="window.location.href='NodeJS.html'">NodeJS Cheat Sheet</button>
+
+</div>
+
 
     
 </body>
