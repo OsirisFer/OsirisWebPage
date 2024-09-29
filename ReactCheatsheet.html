@@ -5,9 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Web Page</title>
     <link rel="stylesheet" type="text/css" href="CheatSheetCss.css">
-    <script src="PruebaPrueba.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const buttons = document.querySelectorAll('#botones-paginacion button');
+          const pages = document.querySelectorAll('.pagina');
+
+          buttons.forEach(button => {
+              button.addEventListener('click', function() {
+                  const page = this.getAttribute('data-page');
+                  pages.forEach(p => p.style.display = 'none');
+                  document.getElementById('pagina' + page).style.display = 'block';
+              });
+          });
+
+          // Initially display the first page
+          pages.forEach(p => p.style.display = 'none');
+          document.getElementById('pagina1').style.display = 'block';
+      });
+  </script>
 </head>
 <body>
+  <div id="botones-paginacion">
+    <button onclick="window.location.href='HTMLCheatsheet.html'">Javascript Sheet</button>
+    <button onclick="window.location.href='ReactCheatsheet.html'">React Cheat Sheet</button>
+    <button onclick="window.location.href='NodeJS.html'">NodeJS Cheat Sheet</button>
+
+</div>
   <h1>React</h1>
   <h2>Componentes</h2>
   <p>Las páginas en react están hechas de componentes, piezas de la interfaz de usuario que tienen su propia logica y apariencia. Un componente puede ser chico como un botón o hasta una página entera, básicamente un componente es una función de JavaScript que retorna una un markup</p>
