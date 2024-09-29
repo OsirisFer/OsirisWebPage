@@ -8,4 +8,4 @@ HTML y CSS: Buenas prácticas para sitios responsivos.
 Node.js: Programación del lado del servidor y módulos clave.
 Mi meta es ofrecer un recurso claro y útil para que más personas puedan aprender y mejorar, sin las barreras del idioma.
 
-[Practicing](https://osirisfer.github.io/OsirisWebPage/HTMLCheatsheet.html)
+(https://osirisfer.github.io/OsirisWebPage/HTMLCheatsheet.html)
