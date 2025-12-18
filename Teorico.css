@@ -1,4 +1,14 @@
 /*
+From CSS Version 3, there are five main ways to reference a color.
+
+By RGB value for example rgb(255, 0, 0) from 0 to 255, being (red, green, blue)
+By RGBA value for example rgba(255, 0, 0, 0.5) where the last value is alpha from 0 to 1
+By HSL value for example hsl(120, 100%, 50%) (hue, saturation, lightness)
+By hex value and alpha for example #RRGGBBAA 
+By predefined color names:
+1) black 2) silver 3) gray 4) white 5) maroon 6) red 7) purple 8) fuchsia 9) green 10) lime 11) olive 12) yellow 13) navy 14) blue 15) teal 16) aqua
+
+
 :root > body { aplica estuilo al body hijo del root }
 :empty{ toma cualquier elemento que no contenga nada realmente ni espacios }
 div:empty{ cualquier div que este vacio }
